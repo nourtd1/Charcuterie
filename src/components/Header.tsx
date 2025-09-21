@@ -1,0 +1,276 @@
+"use client";
+
+import Link from "next/link";
+import { LogOut, ShoppingCart, User, Utensils, Menu, X, Search, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/hooks/use-cart";
+import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { products } from "@/lib/data";
+
+
+const navLinks = [
+    { href: "/", label: "Accueil" },
+    { href: "/products", label: "Boutique" },
+    { href: "/news", label: "Nouveautés" },
+    { href: "/about", label: "À Propos" },
+    { href: "/contact", label: "Contact" },
+];
+
+function NavLink({ href, label, onClick }: { href: string; label: string; onClick?: () => void }) {
+    return (
+        <Link 
+            href={href}
+            onClick={onClick}
+            className="relative text-muted-foreground transition-colors duration-300 hover:text-foreground after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-primary after:to-accent after:rounded-full after:transition-[width] after:duration-300 hover:after:w-full"
+        >
+            {label}
+        </Link>
+    );
+}
+
+const categorySlugMap: Record<string, string> = {
+  "Viandes": "viande",
+  "Boissons naturelles": "boisson-naturelle",
+  "Autres produits": "autres-produits",
+  "Vins rouges": "vin-rouge",
+};
+
+export default function Header() {
+  const { getCartItemCount } = useCart();
+  const [itemCount, setItemCount] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  
+  const { user, loading } = useAuth();
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    products.forEach(p => set.add(p.category));
+    const labels = Array.from(set);
+    const items = labels
+      .filter(label => categorySlugMap[label])
+      .map(label => ({ label, slug: categorySlugMap[label] }));
+    return [{ label: "Toutes les catégories", slug: "all" }, ...items];
+  }, []);
+
+  useEffect(() => {
+    setIsClient(true);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const updateCount = () => {
+        setItemCount(getCartItemCount());
+    }
+    window.addEventListener('cartUpdated', updateCount);
+    updateCount(); 
+    return () => window.removeEventListener('cartUpdated', updateCount);
+  }, [getCartItemCount]);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    toast({ title: "Déconnexion réussie" });
+    router.push('/');
+  };
+
+  const handleSearch = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const params = new URLSearchParams();
+    if (searchTerm.trim()) params.set('q', searchTerm.trim());
+    if (selectedCategory && selectedCategory !== 'all') params.set('category', selectedCategory);
+    const query = params.toString();
+    router.push(`/products${query ? `?${query}` : ''}`);
+  };
+
+  return (
+    <header className={cn(
+        "sticky top-0 z-50 w-full transition-all duration-300",
+        isScrolled
+          ? "shadow-lg border-b border-border/40 bg-gradient-to-b from-background/90 to-background/70 backdrop-blur-md"
+          : "border-b border-transparent bg-background/60 backdrop-blur-md"
+    )}>
+      <div className="container flex h-16 max-w-screen-2xl items-center gap-4">
+        <Link href="/" className="mr-2 flex items-center space-x-2">
+          <Utensils className="h-7 w-7 text-primary" />
+          <div className="flex flex-col leading-tight">
+          <span className="font-bold sm:inline-block font-headline text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            charcuterie & alimentation
+          </span>
+            <span className="hidden sm:block text-[11px] text-muted-foreground">Qualité & service</span>
+          </div>
+        </Link>
+        
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-6 text-sm">
+          {navLinks.map(link => <NavLink key={link.href} {...link} />)}
+        </nav>
+
+        {/* Search Bar (desktop) */}
+        <form onSubmit={handleSearch} className="hidden lg:flex flex-1 items-center gap-2">
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="Toutes les catégories" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map(({ label, slug }) => (
+                <SelectItem key={slug} value={slug}>{label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <div className="relative flex-1">
+            <Input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Rechercher un produit..."
+              className="pr-10"
+            />
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          </div>
+          <Button type="submit">Rechercher</Button>
+        </form>
+
+        {/* Right side icons (mobile) */}
+        <div className="flex lg:hidden items-center justify-end gap-1 ml-auto">
+          <Button variant="ghost" size="icon" className="h-10 w-10" aria-label="Favoris" onClick={() => router.push('/products?q=%3Afavorites')}>
+            <Heart className="h-5 w-5" />
+          </Button>
+            <Link href="/cart" aria-label="Panier">
+            <Button variant="ghost" size="icon" className="relative h-10 w-10">
+                    <ShoppingCart className="h-5 w-5" />
+                    {isClient && itemCount > 0 && (
+                      <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-foreground ring-1 ring-border">
+                        {itemCount}
+                      </span>
+                    )}
+                  <span className="sr-only">Panier</span>
+                </Button>
+              </Link>
+             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Ouvrir le menu">
+                        {isMobileMenuOpen ? (
+                          <X className="h-6 w-6 transition-transform duration-300 rotate-90" />
+                        ) : (
+                          <Menu className="h-6 w-6 transition-transform duration-300" />
+                        )}
+                        <span className="sr-only">Ouvrir le menu</span>
+                    </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[300px] sm:w-[400px] p-0">
+                    <div className="p-6">
+                <Link href="/" className="mr-6 flex items-center space-x-2 mb-6" onClick={() => setIsMobileMenuOpen(false)}>
+                            <Utensils className="h-7 w-7 text-primary" />
+                            <span className="font-bold font-headline text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                                charcuterie & alimentation
+                            </span>
+                        </Link>
+                        <nav className="flex flex-col gap-6 text-lg">
+                            {navLinks.map(link => (
+                                <NavLink key={link.href} {...link} onClick={() => setIsMobileMenuOpen(false)}/>
+                            ))}
+                        </nav>
+                <div className="mt-6">
+                  <form onSubmit={(e) => { handleSearch(e); setIsMobileMenuOpen(false); }} className="flex items-center gap-2">
+                    <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                      <SelectTrigger className="w-40">
+                        <SelectValue placeholder="Catégories" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map(({ label, slug }) => (
+                          <SelectItem key={slug} value={slug}>{slug === 'all' ? 'Toutes' : label}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder="Recherche..."
+                    />
+                    <Button type="submit" size="icon" aria-label="Rechercher"><Search className="h-4 w-4"/></Button>
+                  </form>
+                            </div>
+                    </div>
+                </SheetContent>
+            </Sheet>
+        </div>
+
+        {/* Right side icons (desktop) */}
+        <div className="hidden lg:flex items-center justify-end gap-2">
+            {!loading && (
+              user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center gap-2">
+                      <User className="h-5 w-5" />
+                      <span>{user.displayName || 'Mon Compte'}</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild className="cursor-pointer">
+                      <Link href="/account">Profil & Commandes</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="cursor-pointer">
+                        <Link href="/account?tab=security">Sécurité</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Déconnexion</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                 <Button asChild variant="ghost">
+                  <Link href="/account">
+                    Se connecter
+                  </Link>
+                </Button>
+              )
+            )}
+          <Button variant="ghost" size="icon" className="h-10 w-10" aria-label="Favoris" onClick={() => router.push('/products?q=%3Afavorites')}>
+            <Heart className="h-5 w-5" />
+          </Button>
+          <Link href="/cart" aria-label="Panier">
+            <Button variant="ghost" size="icon" className="relative h-10 w-10">
+                <ShoppingCart className="h-5 w-5" />
+                {isClient && itemCount > 0 && (
+                  <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-foreground ring-1 ring-border">
+                    {itemCount}
+                  </span>
+                )}
+              <span className="sr-only">Panier</span>
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
+}

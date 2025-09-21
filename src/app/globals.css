@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Thème Bleu & Orange */
+    --background: 210 54% 11%; /* #0D1B2A - bleu nuit */
+    --foreground: 75 6% 87%;  /* #E0E1DD - blanc cassé */
+
+    --card: 220 37% 17%;      /* #1B263B - bleu clair (sections) */
+    --card-foreground: 75 6% 87%;
+
+    --popover: 220 37% 17%;
+    --popover-foreground: 75 6% 87%;
+
+    --primary: 32 100% 48%;   /* #F77F00 - orange vif (CTA) */
+    --primary-foreground: 75 6% 95%;
+
+    --secondary: 220 37% 22%;
+    --secondary-foreground: 75 6% 87%;
+
+    --muted: 210 30% 18%;
+    --muted-foreground: 75 6% 75%;
+
+    --accent: 220 37% 25%;
+    --accent-foreground: 75 6% 87%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 215 30% 28%;
+    --input: 215 30% 28%;
+    --ring: 32 100% 48%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Variante sombre: conserve la palette, augmente légèrement les contrastes */
+    --background: 210 54% 9%;
+    --foreground: 75 6% 90%;
+
+    --card: 220 37% 14%;
+    --card-foreground: 75 6% 90%;
+
+    --popover: 220 37% 14%;
+    --popover-foreground: 75 6% 90%;
+
+    --primary: 32 100% 48%;
+    --primary-foreground: 75 6% 95%;
+
+    --secondary: 220 37% 20%;
+    --secondary-foreground: 75 6% 88%;
+    
+    --muted: 210 25% 14%;
+    --muted-foreground: 75 6% 70%;
+    
+    --accent: 220 37% 22%;
+    --accent-foreground: 75 6% 88%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 215 30% 24%;
+    --input: 215 30% 24%;
+    --ring: 32 100% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Styles pour les micro-interactions du Hero */
+  .hero-cta-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-base font-semibold shadow-lg transition-all duration-200 hover:shadow-xl;
+  }
+  
+  .hero-cta-primary:hover {
+    transform: scale(1.03);
+  }
+  
+  .hero-cta-secondary {
+    @apply border-2 border-white text-white hover:bg-white hover:text-foreground px-8 py-3 text-base font-semibold backdrop-blur-sm transition-all duration-200 hover:shadow-xl;
+  }
+  
+  .hero-cta-secondary:hover {
+    transform: scale(1.03);
+  }
+  
+  .hero-quick-link {
+    @apply text-white/90 hover:text-white transition-all duration-200 relative;
+  }
+  
+  .hero-quick-link:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  }
+  
+  .hero-quick-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .hero-quick-link:hover::after {
+    width: 100%;
+  }
+  
+  /* Amélioration du contraste pour l'accessibilité */
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.25) 0%,
+      rgba(0, 0, 0, 0.25) 50%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+  }
+  
+  /* Animation pour la barre de recherche */
+  .search-input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 3px rgba(247, 127, 0, 0.25); /* #F77F00 */
+  }
+}
