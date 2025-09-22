@@ -342,7 +342,7 @@ export default function Home() {
                     alt="Julie's Gourmet Goma Storefront"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
+                    className="object-cover object-[50%_22%] md:object-[50%_18%]"
                     data-ai-hint="gourmet store"
                 />
             </div>

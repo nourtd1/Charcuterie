@@ -17,6 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { ShoppingBag, User as UserIcon, Lock } from "lucide-react";
+import Image from "next/image";
 
 const registerSchema = z.object({
     name: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères." }),
@@ -196,16 +197,20 @@ export default function AccountPage() {
     }
 
   return (
-    <div className="relative -mt-16">
-      {/* Arrière-plan décoratif */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 via-accent/10 to-background" />
-      <div className="absolute -z-10 top-[-20%] right-[-10%] h-[60vh] w-[60vh] rounded-full bg-accent/25 blur-3xl" />
-      <div className="absolute -z-10 bottom-[-20%] left-[-10%] h-[60vh] w-[60vh] rounded-full bg-primary/25 blur-3xl" />
-
+    <div className="bg-background">
       {/* Hero */}
-      <section className="h-[30vh] w-full flex items-center justify-center text-center">
+      <section className="relative -mt-16 h-[36vh] w-full flex items-center justify-center text-center overflow-hidden">
+        <Image
+          src="/assets/images/banners/accueil_banner.jpg"
+          alt="Connexion & Inscription"
+          fill
+          sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px"
+          className="object-cover -z-20"
+          priority
+        />
+        <div className="absolute inset-0 -z-10 hero-overlay" />
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl md:text-5xl font-black font-headline bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-5xl font-black font-headline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Connexion & Inscription
           </h1>
           <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">

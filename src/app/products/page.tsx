@@ -1,4 +1,6 @@
 import ProductCatalog from "@/components/ProductCatalog";
+import CategoryCard from "@/components/CategoryCard";
+import CategoryPreview from "@/components/CategoryPreview";
 import type { ProductCategory } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +19,21 @@ const slugToCategory: Record<string, ProductCategory> = {
   "autre-produit": "Autres produits",
   "vin-rouge": "Vins rouges",
   "vins-rouges": "Vins rouges",
+};
+
+// Icônes et slugs utilisés pour l'affichage comme sur la page d'accueil
+const categoryIcons: Record<string, React.ReactNode> = {
+  "Viandes": <Beef className="w-8 h-8 md:w-10 md:h-10 text-primary" />,
+  "Boissons naturelles": <GlassWater className="w-8 h-8 md:w-10 md:h-10 text-primary" />,
+  "Autres produits": <Flame className="w-8 h-8 md:w-10 md:h-10 text-primary" />,
+  "Vins rouges": <Wine className="w-8 h-8 md:w-10 md:h-10 text-primary" />,
+};
+
+const categorySlugMap: Record<string, string> = {
+  "Viandes": "viande",
+  "Boissons naturelles": "boisson-naturelle",
+  "Autres produits": "autres-produits",
+  "Vins rouges": "vin-rouge",
 };
 
 function normalizeCategory(param?: string): ProductCategory | undefined {
@@ -44,17 +61,17 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
       <header className="relative -mt-16 h-[70vh] md:h-[65vh] w-full flex items-center justify-center text-center overflow-hidden">
         {/* Fond image + overlay */}
         <Image
-          src="/assets/images/banners/promo_banner.jpg"
+          src="/assets/images/banners/accueil_banner.jpg"
           alt="Charcuterie & produits du terroir — Boutique"
           fill
           sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px"
-          className="object-cover -z-20"
+          className="object-cover z-0"
           priority
         />
-        <div className="absolute inset-0 -z-10 hero-overlay" />
+        <div className="absolute inset-0 z-10 hero-overlay" />
 
         {/* Contenu central */}
-        <div className="relative z-10 max-w-5xl w-[92%] px-4 text-white">
+        <div className="relative z-20 max-w-5xl w-[92%] px-4 text-white">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-black font-headline mb-2 leading-tight">
             Notre Catalogue
           </h1>
@@ -115,7 +132,7 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
 
       
 
-      {/* Catégories en cartes */}
+      {/* Catégories en cartes (uniformisé avec l'accueil) */}
       <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto">
           <div className="text-center mb-8">
@@ -123,30 +140,37 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
             <p className="text-muted-foreground mt-2">Accédez rapidement à ce qui vous intéresse.</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <Link href="/products?category=viande">
-              <Card className="text-center p-6 bg-card/60 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full rounded-xl">
-                <div className="flex justify-center items-center mb-3"><Beef className="w-8 h-8 text-primary" /></div>
-                <CardTitle className="font-headline text-base">Viandes</CardTitle>
-              </Card>
-            </Link>
-            <Link href="/products?category=boisson-naturelle">
-              <Card className="text-center p-6 bg-card/60 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full rounded-xl">
-                <div className="flex justify-center items-center mb-3"><GlassWater className="w-8 h-8 text-primary" /></div>
-                <CardTitle className="font-headline text-base">Boissons naturelles</CardTitle>
-              </Card>
-            </Link>
-            <Link href="/products?category=autres-produits">
-              <Card className="text-center p-6 bg-card/60 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full rounded-xl">
-                <div className="flex justify-center items-center mb-3"><Flame className="w-8 h-8 text-primary" /></div>
-                <CardTitle className="font-headline text-base">Autres produits</CardTitle>
-              </Card>
-            </Link>
-            <Link href="/products?category=vin-rouge">
-              <Card className="text-center p-6 bg-card/60 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full rounded-xl">
-                <div className="flex justify-center items-center mb-3"><Wine className="w-8 h-8 text-primary" /></div>
-                <CardTitle className="font-headline text-base">Vins rouges</CardTitle>
-              </Card>
-            </Link>
+            {Object.entries(categoryIcons).map(([category, icon]) => (
+              <CategoryCard
+                key={category}
+                category={category}
+                icon={icon}
+                slug={categorySlugMap[category]}
+                showProductCount={true}
+                variant="default"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Aperçu des catégories (uniformisé avec l'accueil) */}
+      <section className="py-12 md:py-16 bg-secondary/30">
+        <div className="container mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold font-headline text-primary">Aperçu par catégorie</h2>
+            <p className="text-muted-foreground mt-2">Un coup d'œil aux produits populaires par catégorie.</p>
+          </div>
+          <div className="space-y-12">
+            {Object.entries(categoryIcons).map(([category, icon]) => (
+              <CategoryPreview
+                key={category}
+                category={category}
+                icon={icon}
+                slug={categorySlugMap[category]}
+                maxProducts={4}
+              />
+            ))}
           </div>
         </div>
       </section>

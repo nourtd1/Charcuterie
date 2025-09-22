@@ -6,12 +6,12 @@ export const IMAGE_PATHS = {
   LOGO: '/assets/images/logo/logo.png',
   FAVICON: '/assets/images/logo/favicon.ico',
   
-  // Bannières
-  BANNERS: {
-    ACCUEIL: '/assets/images/banners/accueil_banner.jpg',
-    PROMO: '/assets/images/banners/promo_banner.jpg',
-    SAISON: '/assets/images/banners/saison_banner.jpg',
-  },
+    // Bannières
+    BANNERS: {
+      ACCUEIL: '/assets/images/banners/accueil_banner.jpg',
+      PROMO: '/assets/images/banners/promo_banner.jpg',
+      SAISON: '/assets/images/banners/saison_banner.jpg',
+    },
   
   // Équipe
   TEAM: {

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Utensils, MapPin, Phone, Mail, Instagram, Facebook, Twitter } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   return (
@@ -50,6 +51,20 @@ export default function Footer() {
                 <a href="mailto:certainmg32@gmail.com" className="hover:text-primary break-all">certainmg32@gmail.com</a>
               </li>
             </ul>
+
+            {/* Bouton unique vers la carte */}
+            <div className="mt-4">
+              <Button asChild className="inline-flex items-center gap-2">
+                <Link
+                  href={`https://www.openstreetmap.org/?mlat=${-1.68}&mlon=${29.23}#map=16/${-1.68}/${29.23}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Voir la localisation sur OpenStreetMap"
+                >
+                  <MapPin className="h-4 w-4" /> Voir sur la carte
+                </Link>
+              </Button>
+            </div>
           </div>
 
           {/* Bloc 3 – Horaires d’ouverture */}

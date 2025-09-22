@@ -34,13 +34,23 @@ const blogPosts = [
 export default function BlogPage() {
   return (
     <div className="bg-secondary/30">
+        {/* Hero */}
+        <header className="relative -mt-16 h-[36vh] w-full flex items-center justify-center text-center overflow-hidden">
+          <Image
+            src="/assets/images/banners/accueil_banner.jpg"
+            alt="Charcuterie & produits du terroir — Blog"
+            fill
+            sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px"
+            className="object-cover -z-20"
+            priority
+          />
+          <div className="absolute inset-0 -z-10 hero-overlay" />
+          <div className="container mx-auto px-4">
+            <h1 className="text-3xl md:text-5xl font-black font-headline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Notre Blog</h1>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-white/90">Conseils, recettes et histoires de notre épicerie.</p>
+          </div>
+        </header>
         <div className="container mx-auto py-16 md:py-24">
-            <div className="text-center mb-12">
-                <h1 className="text-4xl md:text-5xl font-black font-headline text-primary">Notre Blog</h1>
-                <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                    Conseils, recettes et histoires de notre épicerie.
-                </p>
-            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {blogPosts.map((post) => (
                     <Card key={post.id} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300">

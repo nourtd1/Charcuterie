@@ -1,9 +1,19 @@
+import Image from "next/image";
+
 export default function PrivacyPage() {
   return (
     <div className="bg-background">
       {/* Hero */}
       <section className="relative -mt-16 h-[36vh] w-full flex items-center justify-center text-center overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/20 via-accent/20 to-background" />
+        <Image
+          src="/assets/images/banners/accueil_banner.jpg"
+          alt="Politique de Confidentialité"
+          fill
+          sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px"
+          className="object-cover -z-20"
+          priority
+        />
+        <div className="absolute inset-0 -z-10 hero-overlay" />
         <div className="container mx-auto px-4">
           <h1 className="text-3xl md:text-5xl font-black font-headline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Politique de Confidentialité</h1>
           <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">Comment nous collectons et protégeons vos données.</p>
