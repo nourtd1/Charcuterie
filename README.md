@@ -267,6 +267,20 @@ Le catalogue contient **24 produits** répartis en **4 catégories** :
 - **Adresse** : Avenue des Saveurs 12, Quartier Trois Payotte, 40000 Goma, RDC
 - **WhatsApp** : +243 972 499 388
 
+## 👨‍💻 Développement & Crédits
+
+Ce projet a été développé par :
+
+Nour
+
+📧 Email : annourmah@gmail.com
+
+📱 Téléphone : +250 798 977 292
+
+🌐 Portfolio : https://portfolio-nour-td.vercel.app/
+
+Merci de mentionner l’auteur en cas de réutilisation ou de redistribution du code.
+
 ## 📄 Licence
 
 Projet privé — **Charcuterie & Alimentation Certains**  
@@ -274,4 +288,4 @@ Usage interne et démonstration. Tous droits réservés.
 
 ---
 
-*Développé avec ❤️ pour l'épicerie fine de Goma*
+*Développé avec Nour pour l'épicerie fine de Goma*
