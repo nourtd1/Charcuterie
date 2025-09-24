@@ -2,8 +2,9 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
-import { Beef, GlassWater, Flame, Wine, Utensils, Star, ArrowRight, Truck, Percent } from 'lucide-react';
+import { Beef, GlassWater, Flame, Wine, Utensils, Star, ArrowRight, Truck, Percent, ShieldCheck, Award, Leaf } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Input } from '@/components/ui/input';
 import { products } from '@/lib/data';
 import SearchBar from '@/components/SearchBar';
 import CategoryCard from '@/components/CategoryCard';
@@ -62,83 +63,73 @@ const buildWhatsAppLink = (productName: string) =>
 export default function Home() {
   return (
     <>
-      {/* Hero Section - Refonte moderne */}
-      <header className="relative -mt-16 h-[70vh] md:h-[65vh] w-full flex items-center justify-center text-center overflow-hidden">
-        {/* Fond image WebP avec overlay dégradé */}
-        <Image
-          src="/assets/images/banners/accueil_banner.jpg"
-          alt="Charcuterie & produits du terroir — Fraîcheur livrée chez vous"
-          fill
-          sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px"
-          className="object-cover -z-20"
-          priority
-          data-ai-hint="gourmet food background"
-        />
-        {/* Overlay dégradé pour le contraste */}
-        <div className="absolute inset-0 -z-10 hero-overlay" />
-
-        {/* Contenu central */}
-        <div className="relative z-10 max-w-5xl w-[92%] px-4">
-          {/* Titre principal (H1) */}
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black font-headline text-white mb-4 leading-tight">
-            Charcuterie & produits du terroir
-          </h1>
-          <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">
-            Fraîcheur livrée chez vous
-          </div>
-          
-          {/* Sous-titre */}
-          <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte.
-          </p>
-
-          {/* Barre de recherche */}
-          <SearchBar className="mb-8 max-w-2xl mx-auto" />
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <Button 
-              size="lg" 
-              className="hero-cta-primary" 
-              asChild
-            >
-              <Link href="/products">Voir le catalogue</Link>
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="hero-cta-secondary" 
-              asChild
-            >
-              <Link href="/products?filter=promotions">Promotions</Link>
-            </Button>
-          </div>
-
-          {/* Quick links */}
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm md:text-base">
-            <Link 
-              href="/categories/viandes" 
-              className="hero-quick-link"
-            >
-              Viandes
-            </Link>
-            <span className="text-white/60">•</span>
-            <Link 
-              href="/categories/boissons-naturelles" 
-              className="hero-quick-link"
-            >
-              Boissons
-            </Link>
-            <span className="text-white/60">•</span>
-            <Link 
-              href="/products?filter=offres-du-jour" 
-              className="hero-quick-link"
-            >
-              Offres du jour
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Hero Carousel - plus pro */}
+      <section className="relative -mt-16 overflow-hidden">
+        <Carousel opts={{ align: 'start', loop: true }}>
+          <CarouselContent>
+            {[{
+              image: '/assets/images/banners/accueil_banner.jpg',
+              title: "Charcuterie & produits du terroir",
+              subtitle: "Fraîcheur livrée chez vous",
+              hint: 'gourmet food background'
+            }, {
+              image: '/assets/images/banners/promo_banner.jpg',
+              title: "Promotions de la semaine",
+              subtitle: "Des offres à ne pas manquer",
+              hint: 'weekly deals banner'
+            }, {
+              image: '/assets/images/banners/saison_banner.jpg',
+              title: "Saveurs de saison",
+              subtitle: "Sélection fraîche du moment",
+              hint: 'seasonal products banner'
+            }].map((slide, idx) => (
+              <CarouselItem key={idx}>
+                <header className="relative h-[70vh] md:h-[65vh] w-full flex items-center justify-center text-center">
+                  <Image
+                    src={slide.image}
+                    alt={slide.title}
+                    fill
+                    sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px"
+                    className="object-cover -z-20"
+                    priority={idx === 0}
+                    data-ai-hint={slide.hint}
+                  />
+                  <div className="absolute inset-0 -z-10 hero-overlay" />
+                  <div className="relative z-10 max-w-5xl w-[92%] px-4">
+                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-black font-headline text-white mb-4 leading-tight">
+                      {slide.title}
+                    </h1>
+                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">
+                      {slide.subtitle}
+                    </div>
+                    <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+                      Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte.
+                    </p>
+                    <SearchBar className="mb-8 max-w-2xl mx-auto" />
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                      <Button size="lg" className="hero-cta-primary" asChild>
+                        <Link href="/products">Voir le catalogue</Link>
+                      </Button>
+                      <Button size="lg" variant="outline" className="hero-cta-secondary" asChild>
+                        <Link href="/products?filter=promotions">Promotions</Link>
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-4 text-sm md:text-base">
+                      <Link href="/categories/viandes" className="hero-quick-link">Viandes</Link>
+                      <span className="text-white/60">•</span>
+                      <Link href="/categories/boissons-naturelles" className="hero-quick-link">Boissons</Link>
+                      <span className="text-white/60">•</span>
+                      <Link href="/products?filter=offres-du-jour" className="hero-quick-link">Offres du jour</Link>
+                    </div>
+                  </div>
+                </header>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
+        </Carousel>
+      </section>
 
       {/* Import/Export Banner */}
       <section className="relative py-10 md:py-14 bg-secondary/30 overflow-hidden">
@@ -154,6 +145,19 @@ export default function Home() {
               <Button asChild variant="outline"><Link href="/contact">Demander un devis</Link></Button>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Ruban Partenaires */}
+      <section className="py-8 bg-background">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 items-center opacity-80">
+            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
+            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
+            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
+            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
+            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
+          </div>
         </div>
       </section>
 
@@ -365,6 +369,29 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust Badges */}
+      <section className="py-12 md:py-16 bg-background">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md text-center">
+              <ShieldCheck className="h-10 w-10 text-accent mx-auto mb-3" />
+              <h3 className="font-headline font-semibold">Qualité Contrôlée</h3>
+              <p className="text-muted-foreground mt-1">Sélection rigoureuse de nos producteurs et de nos lots.</p>
+            </div>
+            <div className="p-6 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md text-center">
+              <Award className="h-10 w-10 text-accent mx-auto mb-3" />
+              <h3 className="font-headline font-semibold">Service 5 étoiles</h3>
+              <p className="text-muted-foreground mt-1">Des centaines de clients satisfaits à Goma.</p>
+            </div>
+            <div className="p-6 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md text-center">
+              <Leaf className="h-10 w-10 text-accent mx-auto mb-3" />
+              <h3 className="font-headline font-semibold">Produits Naturels</h3>
+              <p className="text-muted-foreground mt-1">Sans artifices. Goûts authentiques et traçabilité.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto text-center">
@@ -409,6 +436,21 @@ export default function Home() {
                     </Card>
                  </Link>
             </div>
+        </div>
+      </section>
+
+      {/* Newsletter */}
+      <section className="py-16 md:py-24 bg-secondary/30">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Restez informé(e)</h2>
+          <p className="text-muted-foreground mt-2 mb-6">Recevez nos nouvelles, offres et arrivages en avant-première.</p>
+          <div className="mx-auto max-w-xl flex flex-col sm:flex-row gap-3">
+            <Input type="email" placeholder="Votre email" className="h-11" />
+            <Button className="h-11" asChild>
+              <Link href="https://wa.me/243972499388" target="_blank" rel="noopener noreferrer">S'inscrire</Link>
+            </Button>
+          </div>
+          <p className="text-xs text-muted-foreground mt-3">En cliquant, vous acceptez nos <Link href="/privacy" className="underline">règles de confidentialité</Link>.</p>
         </div>
       </section>
 
