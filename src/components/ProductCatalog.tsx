@@ -15,11 +15,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-type SortOption = "recommended" | "price-asc" | "price-desc" | "name-asc" | "name-desc";
+type SortOption = "recommended" | "price-asc" | "price-desc" | "name-asc" | "name-desc" | "newest";
 
 export type ProductCatalogProps = {
   selectedCategory?: ProductCategory;
   query?: string;
+  minPrice?: number;
+  maxPrice?: number;
 };
 
 export function ProductCard({ product, onProductClick }: { product: Product, onProductClick: (product: Product) => void }) {
@@ -31,14 +33,14 @@ export function ProductCard({ product, onProductClick }: { product: Product, onP
   )}`;
 
   return (
-    <Card className="w-full flex flex-col overflow-hidden h-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+    <Card className="w-full flex flex-col overflow-hidden h-full rounded-lg shadow-md hover:shadow-xl transition-all duration-300 group">
       <CardHeader className="p-0">
-        <div className="relative aspect-square w-full cursor-pointer" onClick={() => onProductClick(product)}>
+        <div className="relative aspect-square w-full cursor-pointer overflow-hidden" onClick={() => onProductClick(product)}>
           <Image
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
             data-ai-hint={product.dataAiHint}
           />
         </div>
@@ -123,11 +125,13 @@ export function ProductDetailsDialog({ product, open, onOpenChange }: { product:
     );
 }
 
-export default function ProductCatalog({ selectedCategory, query }: ProductCatalogProps) {
+export default function ProductCatalog({ selectedCategory, query, minPrice, maxPrice }: ProductCatalogProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<ProductCategory | "all">(selectedCategory || "all");
   const [sortOption, setSortOption] = useState<SortOption>("recommended");
+  const [localMinPrice, setLocalMinPrice] = useState<number | "">(typeof minPrice === 'number' ? minPrice : "");
+  const [localMaxPrice, setLocalMaxPrice] = useState<number | "">(typeof maxPrice === 'number' ? maxPrice : "");
 
   const normalizedQuery = (query || "").trim().toLowerCase();
 
@@ -158,8 +162,13 @@ export default function ProductCatalog({ selectedCategory, query }: ProductCatal
   const filteredProducts = useMemo(() => {
     return products
       .filter((p) => categoryFilter === "all" ? true : p.category === categoryFilter)
-      .filter(filterByQuery);
-  }, [categoryFilter, normalizedQuery]);
+      .filter(filterByQuery)
+      .filter((p) => {
+        const minOk = localMinPrice === "" ? true : p.price >= Number(localMinPrice);
+        const maxOk = localMaxPrice === "" ? true : p.price <= Number(localMaxPrice);
+        return minOk && maxOk;
+      });
+  }, [categoryFilter, normalizedQuery, localMinPrice, localMaxPrice]);
 
   const sortedProducts = useMemo(() => {
     const arr = [...filteredProducts];
@@ -176,6 +185,9 @@ export default function ProductCatalog({ selectedCategory, query }: ProductCatal
       case "name-desc":
         arr.sort((a, b) => b.name.localeCompare(a.name));
         break;
+      case "newest":
+        arr.sort((a, b) => b.id - a.id);
+        break;
       case "recommended":
       default:
         // ordre par défaut inchangé
@@ -187,7 +199,7 @@ export default function ProductCatalog({ selectedCategory, query }: ProductCatal
   return (
     <>
       {/* Barre d'outils: filtre & tri */}
-      <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="flex flex-wrap gap-2 items-center">
           <Select value={categoryFilter === "all" ? "all" : categoryFilter} onValueChange={(v) => setCategoryFilter((v as ProductCategory | "all"))}>
             <SelectTrigger className="w-56">
@@ -204,20 +216,40 @@ export default function ProductCatalog({ selectedCategory, query }: ProductCatal
             <span className="text-sm text-muted-foreground">Recherche: "{query}"</span>
           )}
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground hidden md:inline">Trier par</span>
-          <Select value={sortOption} onValueChange={(v) => setSortOption(v as SortOption)}>
-            <SelectTrigger className="w-48">
-              <SelectValue placeholder="Recommandé" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="recommended">Recommandé</SelectItem>
-              <SelectItem value="price-asc">Prix : croissant</SelectItem>
-              <SelectItem value="price-desc">Prix : décroissant</SelectItem>
-              <SelectItem value="name-asc">Nom : A → Z</SelectItem>
-              <SelectItem value="name-desc">Nom : Z → A</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              placeholder="Min $"
+              value={localMinPrice}
+              onChange={(e) => setLocalMinPrice(e.target.value === '' ? '' : Number(e.target.value))}
+              className="h-9 w-24 rounded-md border border-border bg-background px-2 text-sm"
+            />
+            <span className="text-muted-foreground text-sm">—</span>
+            <input
+              type="number"
+              placeholder="Max $"
+              value={localMaxPrice}
+              onChange={(e) => setLocalMaxPrice(e.target.value === '' ? '' : Number(e.target.value))}
+              className="h-9 w-24 rounded-md border border-border bg-background px-2 text-sm"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground hidden md:inline">Trier par</span>
+            <Select value={sortOption} onValueChange={(v) => setSortOption(v as SortOption)}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Recommandé" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="recommended">Recommandé</SelectItem>
+                <SelectItem value="newest">Nouveautés</SelectItem>
+                <SelectItem value="price-asc">Prix : croissant</SelectItem>
+                <SelectItem value="price-desc">Prix : décroissant</SelectItem>
+                <SelectItem value="name-asc">Nom : A → Z</SelectItem>
+                <SelectItem value="name-desc">Nom : Z → A</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
               </div>
 

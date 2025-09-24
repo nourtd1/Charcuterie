@@ -46,7 +46,7 @@ export default function CategoryPreview({
           </div>
         </div>
         <Button asChild variant="outline" className="hidden md:flex group">
-          <Link href={`/products?category=${slug}`}>
+          <Link href={`/categories/${slug}`}>
             Voir tout
           </Link>
         </Button>
@@ -80,7 +80,7 @@ export default function CategoryPreview({
       
       <div className="text-center mt-6 md:hidden">
         <Button asChild variant="outline" className="group">
-          <Link href={`/products?category=${slug}`}>
+          <Link href={`/categories/${slug}`}>
             Voir tous les produits {category.toLowerCase()}
           </Link>
         </Button>

@@ -8,6 +8,7 @@ import { products } from '@/lib/data';
 import SearchBar from '@/components/SearchBar';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryPreview from '@/components/CategoryPreview';
+import Reveal from '@/components/Reveal';
 
 const categoryIcons = {
   "Viandes": <Beef className="w-10 h-10 text-primary" />,
@@ -116,14 +117,14 @@ export default function Home() {
           {/* Quick links */}
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm md:text-base">
             <Link 
-              href="/products?category=viande" 
+              href="/categories/viandes" 
               className="hero-quick-link"
             >
               Viandes
             </Link>
             <span className="text-white/60">•</span>
             <Link 
-              href="/products?category=boisson-naturelle" 
+              href="/categories/boissons-naturelles" 
               className="hero-quick-link"
             >
               Boissons
@@ -145,28 +146,29 @@ export default function Home() {
           <div className="relative h-56 md:h-72 rounded-2xl overflow-hidden ring-1 ring-border/40 shadow-lg">
             <Image src="/assets/images/banners/promo_banner.jpg" alt="Logistique import/export" fill className="object-cover" data-ai-hint="logistics transport" />
           </div>
-          <div>
+          <Reveal>
             <Truck className="h-10 w-10 text-accent mb-3" />
             <h2 className="text-2xl md:text-3xl font-bold font-headline text-foreground">Import / Export & Logistique</h2>
             <p className="text-muted-foreground mt-3">Nous sourçons et expédions des produits de qualité, avec une chaîne logistique fiable pour servir particuliers et professionnels.</p>
             <div className="mt-4">
               <Button asChild variant="outline"><Link href="/contact">Demander un devis</Link></Button>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Categories Section */}
       <section id="categories" className="py-16 md:py-24 bg-background">
         <div className="container mx-auto">
-           <div className="text-center mb-12">
+          <Reveal className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Nos Catégories</h2>
             <p className="max-w-2xl mx-auto text-muted-foreground mt-4">
                 Des saveurs pour chaque occasion, sélectionnées avec le plus grand soin.
             </p>
-          </div>
+          </Reveal>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {Object.entries(categoryIcons).map(([category, icon]) => (
+              <Reveal key={category}>
               <CategoryCard
                 key={category}
                 category={category}
@@ -175,6 +177,7 @@ export default function Home() {
                 showProductCount={true}
                 variant="default"
               />
+              </Reveal>
             ))}
           </div>
         </div>
@@ -183,16 +186,17 @@ export default function Home() {
       {/* Category Preview Section */}
       <section className="py-16 md:py-20 bg-secondary/30">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
+          <Reveal className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Découvrez nos catégories</h2>
             <p className="max-w-2xl mx-auto text-muted-foreground mt-4">
               Cliquez sur une catégorie pour voir tous les produits disponibles
             </p>
-          </div>
+          </Reveal>
           
           {/* Category Previews */}
           <div className="space-y-16">
             {Object.entries(categoryIcons).map(([category, icon]) => (
+              <Reveal key={category}>
               <CategoryPreview
                 key={category}
                 category={category}
@@ -200,6 +204,7 @@ export default function Home() {
                 slug={categorySlugMap[category]}
                 maxProducts={4}
               />
+              </Reveal>
             ))}
           </div>
         </div>
@@ -217,16 +222,16 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map(p => (
-              <Card key={p.id} className="overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-md shadow-sm">
+              <Card key={p.id} className="overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-md shadow-sm group transition-all duration-300 hover:shadow-xl">
                 <div className="relative aspect-square">
-                  <Image src={p.image} alt={p.name} fill className="object-cover" data-ai-hint={p.dataAiHint} />
+                  <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={p.dataAiHint} />
                 </div>
                 <CardContent className="p-4">
                   <h3 className="font-headline font-semibold line-clamp-1">{p.name}</h3>
                   <Button asChild variant="link" className="px-0 mt-1 text-primary">
                     <Link href={buildWhatsAppLink(p.name)} target="_blank" rel="noopener noreferrer">Demander le prix sur WhatsApp</Link>
                   </Button>
-                  <Button asChild size="sm" className="mt-1"><Link href={`/products`}>Voir produit</Link></Button>
+                  <Button asChild size="sm" className="mt-1"><Link href={`/produit/${p.id}`}>Voir produit</Link></Button>
                 </CardContent>
               </Card>
             ))}
@@ -244,16 +249,16 @@ export default function Home() {
             <CarouselContent>
               {discoverProducts.map(p => (
                 <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/4">
-                  <Card className="overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-md shadow-sm">
+                  <Card className="overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-md shadow-sm group transition-all duration-300 hover:shadow-xl">
                     <div className="relative aspect-square">
-                      <Image src={p.image} alt={p.name} fill className="object-cover" data-ai-hint={p.dataAiHint} />
+                      <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={p.dataAiHint} />
                     </div>
                     <CardContent className="p-4">
                       <h3 className="font-headline font-semibold line-clamp-1">{p.name}</h3>
                       <Button asChild variant="link" className="px-0 mt-1 text-primary">
                         <Link href={buildWhatsAppLink(p.name)} target="_blank" rel="noopener noreferrer">Demander le prix sur WhatsApp</Link>
                       </Button>
-                      <Button asChild size="sm" className="mt-1"><Link href={`/products`}>Voir produit</Link></Button>
+                      <Button asChild size="sm" className="mt-1"><Link href={`/produit/${p.id}`}>Voir produit</Link></Button>
                     </CardContent>
                   </Card>
                 </CarouselItem>
@@ -282,9 +287,9 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {bestSellers.map(p => (
-              <Card key={p.id} className="overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-md shadow-sm">
+              <Card key={p.id} className="overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-md shadow-sm group transition-all duration-300 hover:shadow-xl">
                 <div className="relative aspect-square">
-                  <Image src={p.image} alt={p.name} fill className="object-cover" data-ai-hint={p.dataAiHint} />
+                  <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={p.dataAiHint} />
                 </div>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
@@ -295,7 +300,7 @@ export default function Home() {
                   <Button asChild variant="link" className="px-0 mt-1 text-primary">
                     <Link href={buildWhatsAppLink(p.name)} target="_blank" rel="noopener noreferrer">Demander le prix sur WhatsApp</Link>
                   </Button>
-                  <Button asChild size="sm" className="mt-1"><Link href={`/products`}>Voir produit</Link></Button>
+                  <Button asChild size="sm" className="mt-1"><Link href={`/produit/${p.id}`}>Voir produit</Link></Button>
                 </CardContent>
               </Card>
             ))}
@@ -315,9 +320,9 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {specialOffers.map(p => (
-              <Card key={p.id} className="overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-md shadow-sm">
+              <Card key={p.id} className="overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-md shadow-sm group transition-all duration-300 hover:shadow-xl">
                 <div className="relative aspect-square">
-                  <Image src={p.image} alt={p.name} fill className="object-cover" data-ai-hint={p.dataAiHint} />
+                  <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={p.dataAiHint} />
                 </div>
                 <CardContent className="p-4">
                   <h3 className="font-headline font-semibold line-clamp-1">{p.name}</h3>
@@ -346,7 +351,7 @@ export default function Home() {
                     data-ai-hint="gourmet store"
                 />
             </div>
-            <div>
+            <Reveal>
               <Utensils className="h-12 w-12 text-accent mb-4 drop-shadow-sm" />
               <h2 className="text-3xl md:text-4xl font-bold font-headline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4">Notre Histoire</h2>
               <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
@@ -355,7 +360,7 @@ export default function Home() {
               <Button asChild variant="link" className="p-0 h-auto text-lg text-primary hover:text-accent transition-colors">
                 <Link href="/about">En savoir plus <ArrowRight className="ml-2" /></Link>
               </Button>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -366,14 +371,14 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary mb-12">Ce que nos clients disent</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-card/60 backdrop-blur-md border border-border/40 shadow-sm rounded-xl">
+              <Card key={index} className="bg-card/60 backdrop-blur-md border border-border/40 shadow-sm rounded-xl hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex justify-center mb-4">
                     {[...Array(testimonial.stars)].map((_, i) => (
                       <Star key={i} className="h-5 w-5 text-accent fill-accent" />
                     ))}
                   </div>
-                  <p className="text-muted-foreground italic mb-4">"{testimonial.quote}"</p>
+                  <p className="text-muted-foreground italic mb-4 leading-relaxed">"{testimonial.quote}"</p>
                   <p className="font-semibold font-headline">- {testimonial.name}</p>
                 </CardContent>
               </Card>

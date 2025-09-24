@@ -30,10 +30,10 @@ const categoryIcons: Record<string, React.ReactNode> = {
 };
 
 const categorySlugMap: Record<string, string> = {
-  "Viandes": "viande",
-  "Boissons naturelles": "boisson-naturelle",
+  "Viandes": "viandes",
+  "Boissons naturelles": "boissons-naturelles",
   "Autres produits": "autres-produits",
-  "Vins rouges": "vin-rouge",
+  "Vins rouges": "vins",
 };
 
 function normalizeCategory(param?: string): ProductCategory | undefined {
@@ -94,9 +94,9 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
 
           {/* Quick links */}
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm md:text-base">
-            <Link href="/products?category=viande" className="hero-quick-link">Viandes</Link>
+            <Link href="/categories/viandes" className="hero-quick-link">Viandes</Link>
             <span className="text-white/60">•</span>
-            <Link href="/products?category=boisson-naturelle" className="hero-quick-link">Boissons</Link>
+            <Link href="/categories/boissons-naturelles" className="hero-quick-link">Boissons</Link>
             <span className="text-white/60">•</span>
             <Link href="/products?filter=offres-du-jour" className="hero-quick-link">Offres du jour</Link>
           </div>

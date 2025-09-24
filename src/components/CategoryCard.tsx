@@ -41,7 +41,7 @@ export default function CategoryCard({
             </div>
           </div>
           <Button asChild variant="outline" className="hidden md:flex group">
-            <Link href={`/products?category=${slug}`}>
+            <Link href={`/categories/${slug}`}>
               Voir tout
               <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
@@ -52,7 +52,7 @@ export default function CategoryCard({
   }
 
   return (
-    <Link href={`/products?category=${slug}`}>
+    <Link href={`/categories/${slug}`}>
       <Card className="text-center p-6 bg-card/60 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full rounded-xl group cursor-pointer">
         <div className="flex justify-center items-center mb-4">
           <span className="text-primary group-hover:scale-110 transition-transform duration-300">{icon}</span>
