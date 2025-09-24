@@ -11,6 +11,8 @@ export const products: Product[] = [
     description: 'Délicieuse viande de porc fumée, préparée selon des méthodes traditionnelles pour une saveur authentique.',
     image: '/assets/images/products/viandes/viande_fumee_porc.jpg',
     dataAiHint: 'smoked meat',
+    inStock: true,
+    popularity: 95,
   },
   {
     id: 2,
@@ -21,6 +23,8 @@ export const products: Product[] = [
     description: 'Lardons fumés de qualité supérieure, parfaits pour rehausser vos plats et salades.',
     image: '/assets/images/products/viandes/lardons_fumes.jpg',
     dataAiHint: 'smoked bacon',
+    inStock: true,
+    popularity: 88,
   },
   {
     id: 3,
@@ -31,6 +35,8 @@ export const products: Product[] = [
     description: 'Saucisses artisanales, juteuses et savoureuses, idéales pour le barbecue ou la poêle.',
     image: '/assets/images/products/viandes/saucisses.jpg',
     dataAiHint: 'sausages grill',
+    inStock: false,
+    popularity: 75,
   },
   {
     id: 4,
@@ -41,6 +47,8 @@ export const products: Product[] = [
     description: 'Jus d\'ananas 100% pur et naturel, sans sucre ajouté, pour une dose de fraîcheur tropicale.',
     image: '/assets/images/products/boissons_naturelles/jus_ananas.jpg',
     dataAiHint: 'pineapple juice',
+    inStock: true,
+    popularity: 70,
   },
   {
     id: 5,
@@ -51,6 +59,8 @@ export const products: Product[] = [
     description: 'Jus d\'orange fraîchement pressé, riche en vitamine C et au goût intense.',
     image: '/assets/images/products/boissons_naturelles/jus_orange.jpg',
     dataAiHint: 'orange juice',
+    inStock: true,
+    popularity: 85,
   },
   {
     id: 6,
@@ -61,6 +71,8 @@ export const products: Product[] = [
     description: 'Jus de prune onctueux et riche en fibres, pour un bien-être naturel.',
     image: '/assets/images/products/boissons_naturelles/jus_prune.jpg',
     dataAiHint: 'plum juice',
+    inStock: true,
+    popularity: 60,
   },
   {
     id: 7,
@@ -71,6 +83,8 @@ export const products: Product[] = [
     description: 'Jus de fruit de la passion exotique et rafraîchissant, au parfum envoûtant.',
     image: '/assets/images/products/boissons_naturelles/jus_passiflore.jpg',
     dataAiHint: 'passionfruit juice',
+    inStock: true,
+    popularity: 65,
   },
   {
     id: 8,
@@ -81,6 +95,8 @@ export const products: Product[] = [
     description: 'Nectar de mangue doux et velouté, un vrai régal pour les papilles.',
     image: '/assets/images/products/boissons_naturelles/jus_mangue.jpg',
     dataAiHint: 'mango juice',
+    inStock: true,
+    popularity: 78,
   },
   {
     id: 9,
@@ -91,6 +107,8 @@ export const products: Product[] = [
     description: 'Jus de gingembre épicé et vivifiant, parfait pour un coup de boost.',
     image: '/assets/images/products/boissons_naturelles/jus_gingembre.jpg',
     dataAiHint: 'ginger juice',
+    inStock: true,
+    popularity: 92,
   },
   {
     id: 10,
@@ -101,6 +119,8 @@ export const products: Product[] = [
     description: 'Jus de citron pur, idéal pour vos assaisonnements, boissons ou cures détox.',
     image: '/assets/images/products/boissons_naturelles/jus_citron.jpg',
     dataAiHint: 'lemon juice',
+    inStock: true,
+    popularity: 80,
   },
   {
     id: 11,
@@ -111,6 +131,8 @@ export const products: Product[] = [
     description: 'Recharge de bouteille de gaz pour votre cuisine. Service rapide et fiable.',
     image: '/assets/images/products/autres_produits/gaz.jpg',
     dataAiHint: 'gas canister',
+    inStock: true,
+    popularity: 50,
   },
   {
     id: 12,
@@ -121,6 +143,8 @@ export const products: Product[] = [
     description: 'Le traditionnel shikwange, un accompagnement incontournable de la cuisine congolaise.',
     image: '/assets/images/products/autres_produits/shikwange.jpg',
     dataAiHint: 'african food',
+    inStock: true,
+    popularity: 55,
   },
   {
     id: 13,
@@ -131,6 +155,8 @@ export const products: Product[] = [
     description: 'Un vin rouge équilibré avec des notes de fruits rouges et une finale douce.',
     image: '/assets/images/products/vins_rouges/vin_celar.jpg',
     dataAiHint: 'red wine',
+    inStock: true,
+    popularity: 68,
   },
   {
     id: 14,
@@ -141,6 +167,8 @@ export const products: Product[] = [
     description: 'Vin rouge Drosdy, riche et corsé, parfait pour accompagner vos viandes.',
     image: '/assets/images/products/vins_rouges/vin_drosdy.jpg',
     dataAiHint: 'wine bottle',
+    inStock: false,
+    popularity: 62,
   },
   {
     id: 15,
@@ -151,6 +179,8 @@ export const products: Product[] = [
     description: 'Élégant et complexe, le Baron est un vin de choix pour les grandes occasions.',
     image: '/assets/images/products/vins_rouges/vin_baron.jpg',
     dataAiHint: 'luxury wine',
+    inStock: true,
+    popularity: 83,
   },
   {
     id: 16,
@@ -161,6 +191,8 @@ export const products: Product[] = [
     description: 'Un poulet entier délicatement fumé, prêt à être dégusté chaud ou froid.',
     image: '/assets/images/products/viandes/poulet_fume_entier.jpg',
     dataAiHint: 'smoked chicken',
+    inStock: true,
+    popularity: 77,
   },
   {
     id: 17,
@@ -171,6 +203,8 @@ export const products: Product[] = [
     description: 'Jambon cru affiné lentement pour une saveur riche et une texture fondante.',
     image: '/assets/images/products/viandes/jambon_de_pays.jpg',
     dataAiHint: 'cured ham',
+    inStock: true,
+    popularity: 90,
   },
   {
     id: 18,
@@ -181,6 +215,8 @@ export const products: Product[] = [
     description: 'Une limonade pétillante faite maison, avec juste ce qu\'il faut de sucre et de citron.',
     image: '/assets/images/products/boissons_naturelles/limonade_artisanale.jpg',
     dataAiHint: 'artisanal lemonade',
+    inStock: true,
+    popularity: 58,
   },
   {
     id: 19,
@@ -191,6 +227,8 @@ export const products: Product[] = [
     description: 'Thé noir infusé à froid avec des feuilles de menthe fraîche, incroyablement désaltérant.',
     image: '/assets/images/products/boissons_naturelles/the_glace_menthe.jpg',
     dataAiHint: 'mint iced tea',
+    inStock: true,
+    popularity: 66,
   },
   {
     id: 20,
@@ -201,6 +239,8 @@ export const products: Product[] = [
     description: 'Fromage de chèvre frais et crémeux, produit localement par des artisans passionnés.',
     image: '/assets/images/products/autres_produits/fromage_chevre_local.jpg',
     dataAiHint: 'goat cheese',
+    inStock: false,
+    popularity: 61,
   },
   {
     id: 21,
@@ -211,6 +251,8 @@ export const products: Product[] = [
     description: 'Un miel polyfloral au goût boisé et robuste, récolté dans les forêts environnantes.',
     image: '/assets/images/products/autres_produits/miel_de_foret.jpg',
     dataAiHint: 'forest honey',
+    inStock: true,
+    popularity: 72,
   },
   {
     id: 22,
@@ -221,6 +263,8 @@ export const products: Product[] = [
     description: 'Poudre de piment fort pour relever tous vos plats avec caractère. À utiliser avec modération !',
     image: '/assets/images/products/autres_produits/piment_en_poudre.jpg',
     dataAiHint: 'chili powder',
+    inStock: true,
+    popularity: 57,
   },
   {
     id: 23,
@@ -231,6 +275,8 @@ export const products: Product[] = [
     description: 'Un vin rouge de table, fruité et léger, idéal pour les repas de tous les jours.',
     image: '/assets/images/products/vins_rouges/vin_petit_sommelier.jpg',
     dataAiHint: 'table wine',
+    inStock: true,
+    popularity: 64,
   },
   {
     id: 24,
@@ -241,5 +287,7 @@ export const products: Product[] = [
     description: 'Une cuvée d\'exception pour les connaisseurs. Tanins soyeux et arômes complexes de fruits noirs et d\'épices.',
     image: '/assets/images/products/vins_rouges/vin_grand_cru_reserve.jpg',
     dataAiHint: 'premium wine',
+    inStock: true,
+    popularity: 82,
   }
 ];

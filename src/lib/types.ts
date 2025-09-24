@@ -11,6 +11,8 @@ export type Product = {
   description: string;
   image: string;
   dataAiHint: string;
+  inStock?: boolean; // disponibilité du produit
+  popularity?: number; // score popularité (plus grand = plus populaire)
 };
 
 export type CartItem = {

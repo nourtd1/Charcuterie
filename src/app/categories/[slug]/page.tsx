@@ -1,7 +1,7 @@
 import ProductCatalog from "@/components/ProductCatalog";
 import type { ProductCategory } from "@/lib/types";
 import Image from "next/image";
-import { Beef, GlassWater, Wine, Cheese } from "lucide-react";
+import { Beef, GlassWater, Wine } from "lucide-react";
 import { products } from "@/lib/data";
 
 const slugToCategory: Record<string, ProductCategory> = {
@@ -17,7 +17,7 @@ const categoryIcon: Record<string, JSX.Element> = {
   "viandes": <Beef className="w-10 h-10 text-primary" />,
   "boissons-naturelles": <GlassWater className="w-10 h-10 text-primary" />,
   "vins": <Wine className="w-10 h-10 text-primary" />,
-  "fromages": <Cheese className="w-10 h-10 text-primary" />,
+  "fromages": <Beef className="w-10 h-10 text-primary" />,
   "autres-produits": <Beef className="w-10 h-10 text-primary" />,
 };
 

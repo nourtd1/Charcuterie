@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
-import { Beef, GlassWater, Flame, Wine, Utensils, Star, ArrowRight, Truck, Percent, ShieldCheck, Award, Leaf } from 'lucide-react';
+import { Beef, GlassWater, Flame, Wine, Utensils, Star, ArrowRight, Truck, Percent, ShieldCheck, Award, Leaf, Globe, Package, Ship } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Input } from '@/components/ui/input';
 import { products } from '@/lib/data';
@@ -115,11 +115,11 @@ export default function Home() {
                       </Button>
                     </div>
                     <div className="flex flex-wrap items-center justify-center gap-4 text-sm md:text-base">
-                      <Link href="/categories/viandes" className="hero-quick-link">Viandes</Link>
+                      <a href="#viande" className="hero-quick-link">Viande</a>
                       <span className="text-white/60">•</span>
-                      <Link href="/categories/boissons-naturelles" className="hero-quick-link">Boissons</Link>
+                      <a href="#boisson" className="hero-quick-link">Boisson</a>
                       <span className="text-white/60">•</span>
-                      <Link href="/products?filter=offres-du-jour" className="hero-quick-link">Offres du jour</Link>
+                      <a href="#offre-du-jour" className="hero-quick-link">Offre du jour</a>
                     </div>
                   </div>
                 </header>
@@ -131,20 +131,77 @@ export default function Home() {
         </Carousel>
       </section>
 
-      {/* Import/Export Banner */}
-      <section className="relative py-10 md:py-14 bg-secondary/30 overflow-hidden">
-        <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center">
-          <div className="relative h-56 md:h-72 rounded-2xl overflow-hidden ring-1 ring-border/40 shadow-lg">
-            <Image src="/assets/images/banners/promo_banner.jpg" alt="Logistique import/export" fill className="object-cover" data-ai-hint="logistics transport" />
-          </div>
+      {/* Import/Export & Logistique - section améliorée */}
+      <section className="relative py-12 md:py-16 bg-secondary/30 overflow-hidden">
+        <div className="container mx-auto grid md:grid-cols-2 gap-10 items-center">
+          {/* Texte & points clés */}
           <Reveal>
-            <Truck className="h-10 w-10 text-accent mb-3" />
+            <div className="flex items-center gap-3 mb-3">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 ring-1 ring-accent/30">
+                <Truck className="h-5 w-5 text-accent" />
+              </span>
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 ring-1 ring-primary/30">
+                <Globe className="h-5 w-5 text-primary" />
+              </span>
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-foreground/10 ring-1 ring-foreground/20">
+                <Ship className="h-5 w-5 text-foreground" />
+              </span>
+            </div>
             <h2 className="text-2xl md:text-3xl font-bold font-headline text-foreground">Import / Export & Logistique</h2>
-            <p className="text-muted-foreground mt-3">Nous sourçons et expédions des produits de qualité, avec une chaîne logistique fiable pour servir particuliers et professionnels.</p>
-            <div className="mt-4">
-              <Button asChild variant="outline"><Link href="/contact">Demander un devis</Link></Button>
+            <p className="text-muted-foreground mt-3 max-w-xl">De l'approvisionnement à la livraison finale, nous orchestrons une chaîne logistique fiable pour particuliers et professionnels, avec un suivi transparent à chaque étape.</p>
+
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex items-start gap-3 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md p-4">
+                <Package className="h-5 w-5 text-primary mt-0.5" />
+                <div>
+                  <p className="font-headline font-semibold">Sourcing sécurisé</p>
+                  <p className="text-sm text-muted-foreground">Sélection des meilleurs fournisseurs et contrôle qualité.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md p-4">
+                <Ship className="h-5 w-5 text-accent mt-0.5" />
+                <div>
+                  <p className="font-headline font-semibold">Acheminement optimisé</p>
+                  <p className="text-sm text-muted-foreground">Transport maritime, aérien et routier selon vos délais.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md p-4">
+                <Globe className="h-5 w-5 text-primary mt-0.5" />
+                <div>
+                  <p className="font-headline font-semibold">Douanes simplifiées</p>
+                  <p className="text-sm text-muted-foreground">Gestion documentaire et conformité réglementaire.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md p-4">
+                <Truck className="h-5 w-5 text-accent mt-0.5" />
+                <div>
+                  <p className="font-headline font-semibold">Livraison locale</p>
+                  <p className="text-sm text-muted-foreground">Dernier kilomètre fiable à Goma et environs.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+              <Button asChild><Link href="/contact">Demander un devis</Link></Button>
+              <Button asChild variant="outline"><Link href="/services">En savoir plus</Link></Button>
             </div>
           </Reveal>
+
+          {/* Visuel */}
+          <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden ring-1 ring-border/40 shadow-lg">
+            <Image src="/assets/images/banners/promo_banner.jpg" alt="Chaîne logistique" fill className="object-cover" data-ai-hint="supply chain logistics map" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-background/40 via-background/10 to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4 grid grid-cols-2 gap-3">
+              <div className="rounded-xl border border-border/40 bg-background/70 backdrop-blur p-3">
+                <p className="text-xs text-muted-foreground">Délai moyen</p>
+                <p className="text-sm font-headline font-semibold">5-10 jours</p>
+              </div>
+              <div className="rounded-xl border border-border/40 bg-background/70 backdrop-blur p-3">
+                <p className="text-xs text-muted-foreground">Taux de fiabilité</p>
+                <p className="text-sm font-headline font-semibold">98%</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -200,15 +257,16 @@ export default function Home() {
           {/* Category Previews */}
           <div className="space-y-16">
             {Object.entries(categoryIcons).map(([category, icon]) => (
-              <Reveal key={category}>
-              <CategoryPreview
-                key={category}
-                category={category}
-                icon={icon}
-                slug={categorySlugMap[category]}
-                maxProducts={4}
-              />
-              </Reveal>
+              <div key={category} id={category === 'Viandes' ? 'viande' : (category === 'Boissons naturelles' ? 'boisson' : undefined)}>
+                <Reveal>
+                  <CategoryPreview
+                    category={category}
+                    icon={icon}
+                    slug={categorySlugMap[category]}
+                    maxProducts={4}
+                  />
+                </Reveal>
+              </div>
             ))}
           </div>
         </div>
@@ -313,7 +371,7 @@ export default function Home() {
       </section>
 
       {/* Special Offers */}
-      <section className="py-16 md:py-20 bg-background">
+      <section id="offre-du-jour" className="py-16 md:py-20 bg-background">
         <div className="container mx-auto">
           <div className="flex items-end justify-between mb-8">
             <div>

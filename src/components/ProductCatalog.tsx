@@ -8,20 +8,21 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/hooks/use-cart";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-type SortOption = "recommended" | "price-asc" | "price-desc" | "name-asc" | "name-desc" | "newest";
+type SortOption = "recommended" | "price-asc" | "price-desc" | "name-asc" | "name-desc" | "newest" | "popularity-desc";
 
 export type ProductCatalogProps = {
   selectedCategory?: ProductCategory;
   query?: string;
   minPrice?: number;
   maxPrice?: number;
+  emptyMessage?: string;
 };
 
 export function ProductCard({ product, onProductClick }: { product: Product, onProductClick: (product: Product) => void }) {
@@ -125,15 +126,24 @@ export function ProductDetailsDialog({ product, open, onOpenChange }: { product:
     );
 }
 
-export default function ProductCatalog({ selectedCategory, query, minPrice, maxPrice }: ProductCatalogProps) {
+export default function ProductCatalog({ selectedCategory, query, minPrice, maxPrice, emptyMessage }: ProductCatalogProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<ProductCategory | "all">(selectedCategory || "all");
   const [sortOption, setSortOption] = useState<SortOption>("recommended");
   const [localMinPrice, setLocalMinPrice] = useState<number | "">(typeof minPrice === 'number' ? minPrice : "");
   const [localMaxPrice, setLocalMaxPrice] = useState<number | "">(typeof maxPrice === 'number' ? maxPrice : "");
+  const [onlyInStock, setOnlyInStock] = useState<boolean>(false);
 
   const normalizedQuery = (query || "").trim().toLowerCase();
+
+  // Keep local price filters in sync with incoming props (e.g., when navigating to promotions)
+  useEffect(() => {
+    setLocalMinPrice(typeof minPrice === 'number' ? minPrice : "");
+  }, [minPrice]);
+  useEffect(() => {
+    setLocalMaxPrice(typeof maxPrice === 'number' ? maxPrice : "");
+  }, [maxPrice]);
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
@@ -166,9 +176,10 @@ export default function ProductCatalog({ selectedCategory, query, minPrice, maxP
       .filter((p) => {
         const minOk = localMinPrice === "" ? true : p.price >= Number(localMinPrice);
         const maxOk = localMaxPrice === "" ? true : p.price <= Number(localMaxPrice);
-        return minOk && maxOk;
+        const stockOk = onlyInStock ? (p.inStock !== false) : true;
+        return minOk && maxOk && stockOk;
       });
-  }, [categoryFilter, normalizedQuery, localMinPrice, localMaxPrice]);
+  }, [categoryFilter, normalizedQuery, localMinPrice, localMaxPrice, onlyInStock]);
 
   const sortedProducts = useMemo(() => {
     const arr = [...filteredProducts];
@@ -178,6 +189,9 @@ export default function ProductCatalog({ selectedCategory, query, minPrice, maxP
         break;
       case "price-desc":
         arr.sort((a, b) => b.price - a.price);
+        break;
+      case "popularity-desc":
+        arr.sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0));
         break;
       case "name-asc":
         arr.sort((a, b) => a.name.localeCompare(b.name));
@@ -215,6 +229,10 @@ export default function ProductCatalog({ selectedCategory, query, minPrice, maxP
           {normalizedQuery && (
             <span className="text-sm text-muted-foreground">Recherche: "{query}"</span>
           )}
+          <label className="flex items-center gap-2 ml-2 px-3 py-1.5 rounded-md border border-border/60 bg-background hover:bg-background/80 cursor-pointer select-none">
+            <input type="checkbox" className="h-4 w-4" checked={onlyInStock} onChange={(e) => setOnlyInStock(e.target.checked)} />
+            <span className="text-sm">En stock uniquement</span>
+          </label>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <div className="flex items-center gap-2">
@@ -242,6 +260,7 @@ export default function ProductCatalog({ selectedCategory, query, minPrice, maxP
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="recommended">Recommandé</SelectItem>
+                <SelectItem value="popularity-desc">Popularité</SelectItem>
                 <SelectItem value="newest">Nouveautés</SelectItem>
                 <SelectItem value="price-asc">Prix : croissant</SelectItem>
                 <SelectItem value="price-desc">Prix : décroissant</SelectItem>
@@ -252,6 +271,15 @@ export default function ProductCatalog({ selectedCategory, query, minPrice, maxP
           </div>
         </div>
               </div>
+
+      {/* Empty state */}
+      {sortedProducts.length === 0 && (
+        <div className="mt-6 rounded-lg border border-border/60 bg-card/60 backdrop-blur-md p-6 text-center">
+          <p className="text-muted-foreground">
+            {emptyMessage || "Aucun produit ne correspond à votre recherche pour le moment."}
+          </p>
+        </div>
+      )}
 
       {/* Grille produits */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">

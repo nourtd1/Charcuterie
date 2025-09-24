@@ -35,7 +35,7 @@ export default function SearchBar({
           placeholder={placeholder}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="h-12 md:h-14 text-base md:text-lg bg-white/95 backdrop-blur-sm border-white/20 text-foreground placeholder:text-muted-foreground/70 focus:bg-white focus:ring-2 focus:ring-primary/50 shadow-lg search-input"
+          className="h-12 md:h-14 text-base md:text-lg bg-white/95 backdrop-blur-sm border-white/20 text-slate-900 placeholder:text-slate-600 focus:bg-white focus:ring-2 focus:ring-primary/50 shadow-lg search-input"
           aria-label="Rechercher des produits"
         />
         <Button

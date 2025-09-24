@@ -52,8 +52,13 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
   const params = (await searchParams) || {};
   const qParam = typeof params.q === 'string' ? params.q : undefined;
   const categoryParam = typeof params.category === 'string' ? params.category : undefined;
+  const filterParam = typeof params.filter === 'string' ? params.filter : undefined;
   const normalizedCategory = normalizeCategory(categoryParam);
   const discoverProducts = products.slice(8, 16);
+  const isPromotionsFilter = (filterParam || '').toLowerCase().includes('promo');
+  const promotionsMin = undefined;
+  const promotionsMax = 5.5; // Aligné avec la home (Offres spéciales)
+  const emptyPromoMessage = "Aucune promotion disponible pour le moment. Revenez bientôt, nous vous tiendrons informés !";
 
   return (
     <div className="bg-background">
@@ -185,7 +190,13 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
                 Parcourez nos catégories pour trouver des produits de qualité supérieure, sélectionnés avec soin pour vous.
             </p>
         </div>
-        <ProductCatalog selectedCategory={normalizedCategory} query={qParam} />
+        <ProductCatalog
+          selectedCategory={normalizedCategory}
+          query={qParam}
+          minPrice={isPromotionsFilter ? promotionsMin : undefined}
+          maxPrice={isPromotionsFilter ? promotionsMax : undefined}
+          emptyMessage={isPromotionsFilter ? emptyPromoMessage : undefined}
+        />
       </div>
 
       {/* FAQ */}
