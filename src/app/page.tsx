@@ -10,6 +10,7 @@ import SearchBar from '@/components/SearchBar';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryPreview from '@/components/CategoryPreview';
 import Reveal from '@/components/Reveal';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const categoryIcons = {
   "Viandes": <Beef className="w-10 h-10 text-primary" />,
@@ -47,7 +48,7 @@ const recentBlogPost = {
     title: "Les secrets d'une planche de charcuterie parfaite",
     description: "Découvrez nos astuces pour composer une planche de charcuterie qui impressionnera vos invités à coup sûr.",
     image: "/assets/images/banners/accueil_banner.jpg",
-    slug: "/blog/planche-charcuterie",
+    slug: "/blog",
     dataAiHint: "charcuterie board",
 };
 
@@ -59,8 +60,29 @@ const buildWhatsAppLink = (productName: string) =>
   `https://wa.me/243972499388?text=${encodeURIComponent(
     `Bonjour, je suis intéressé(e) par le produit "${productName}". Pourriez-vous me donner le prix et les modalités de commande ?`
   )}`;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:9002';
 
 export default function Home() {
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: "Julie's Gourmet Goma",
+    url: siteUrl,
+    logo: `${siteUrl}/assets/images/logo/logo.png`,
+    sameAs: ['https://wa.me/243972499388']
+  };
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: "Julie's Gourmet Goma",
+    url: siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteUrl}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string'
+    }
+  };
   return (
     <>
       {/* Hero Carousel - plus pro */}
@@ -131,6 +153,28 @@ export default function Home() {
         </Carousel>
       </section>
 
+      {/* KPI Stats Strip */}
+      <section className="py-8 md:py-12 bg-background border-t border-border/40">
+        <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div className="p-4 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md text-center">
+            <p className="text-3xl md:text-4xl font-black font-headline text-primary">150+</p>
+            <p className="text-sm text-muted-foreground mt-1">Produits sélectionnés</p>
+          </div>
+          <div className="p-4 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md text-center">
+            <p className="text-3xl md:text-4xl font-black font-headline text-primary">98%</p>
+            <p className="text-sm text-muted-foreground mt-1">Clients satisfaits</p>
+          </div>
+          <div className="p-4 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md text-center">
+            <p className="text-3xl md:text-4xl font-black font-headline text-primary">24h</p>
+            <p className="text-sm text-muted-foreground mt-1">Livraison locale moyenne</p>
+          </div>
+          <div className="p-4 rounded-xl border border-border/40 bg-card/60 backdrop-blur-md text-center">
+            <p className="text-3xl md:text-4xl font-black font-headline text-primary">300+</p>
+            <p className="text-sm text-muted-foreground mt-1">Commandes livrées</p>
+          </div>
+        </div>
+      </section>
+
       {/* Import/Export & Logistique - section améliorée */}
       <section className="relative py-12 md:py-16 bg-secondary/30 overflow-hidden">
         <div className="container mx-auto grid md:grid-cols-2 gap-10 items-center">
@@ -183,7 +227,7 @@ export default function Home() {
 
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <Button asChild><Link href="/contact">Demander un devis</Link></Button>
-              <Button asChild variant="outline"><Link href="/services">En savoir plus</Link></Button>
+              <Button asChild variant="outline"><Link href="/about">En savoir plus</Link></Button>
             </div>
           </Reveal>
 
@@ -391,7 +435,7 @@ export default function Home() {
                   <Button asChild variant="link" className="px-0 mt-1 text-primary">
                     <Link href={buildWhatsAppLink(p.name)} target="_blank" rel="noopener noreferrer">Demander le prix sur WhatsApp</Link>
                   </Button>
-                  <Button asChild size="sm" className="mt-1"><Link href={`/products`}>Voir produit</Link></Button>
+                  <Button asChild size="sm" className="mt-1"><Link href={`/produit/${p.id}`}>Voir produit</Link></Button>
                 </CardContent>
               </Card>
             ))}
@@ -447,6 +491,40 @@ export default function Home() {
               <p className="text-muted-foreground mt-1">Sans artifices. Goûts authentiques et traçabilité.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-16 md:py-24 bg-secondary/30">
+        <div className="container mx-auto max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary text-center mb-8">FAQ</h2>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="faq-commande">
+              <AccordionTrigger>Comment passer commande ?</AccordionTrigger>
+              <AccordionContent>
+                Parcourez le catalogue, ouvrez une fiche produit et utilisez le bouton WhatsApp
+                pour demander le prix et finaliser votre commande avec notre équipe.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="faq-livraison">
+              <AccordionTrigger>Quels sont les délais de livraison ?</AccordionTrigger>
+              <AccordionContent>
+                Livraison locale à Goma en 24h en moyenne, du lundi au samedi (9h–18h).
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="faq-paiement">
+              <AccordionTrigger>Quels moyens de paiement acceptez‑vous ?</AccordionTrigger>
+              <AccordionContent>
+                Paiement à la livraison ou selon les modalités convenues via WhatsApp (cash ou mobile money).
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="faq-qualite">
+              <AccordionTrigger>Comment garantissez‑vous la qualité des produits ?</AccordionTrigger>
+              <AccordionContent>
+                Sélection rigoureuse des fournisseurs, contrôle des lots et chaîne du froid maîtrisée.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </section>
 
@@ -540,6 +618,14 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
     </>
   );
 }

@@ -1,0 +1,22 @@
+{
+  "name": "Julie's Gourmet Goma",
+  "short_name": "Julie's Gourmet",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D1B2A",
+  "theme_color": "#0D1B2A",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/assets/images/logo/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/logo/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+

@@ -1,4 +1,4 @@
-import type {Metadata} from 'next';
+import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header";
@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   description: "Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte. Charcuterie, vins et produits naturels de qualité.",
   keywords: ["charcuterie", "produits du terroir", "Goma", "livraison", "épicerie fine", "vins", "boissons naturelles"],
   authors: [{ name: "Julie's Gourmet Goma" }],
+  manifest: "/manifest.webmanifest",
+  themeColor: "#0D1B2A",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/assets/images/logo/logo.png",
+  },
   openGraph: {
     title: "Charcuterie & produits du terroir — Fraîcheur livrée chez vous",
     description: "Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte.",
@@ -47,6 +53,14 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -58,13 +72,18 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700;900&display=swap" rel="stylesheet" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#0D1B2A" />
+        <link rel="apple-touch-icon" href="/assets/images/logo/logo.png" />
       </head>
       <body className="font-body antialiased bg-background">
         <AuthProvider>
             <CartProvider>
+                <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-white focus:text-black focus:px-3 focus:py-2">Aller au contenu</a>
                 <div className="flex min-h-screen flex-col">
                   <Header />
-                  <main className="flex-grow pt-16">{children}</main>
+                  <main id="main-content" className="flex-grow pt-16">{children}</main>
                   <Footer />
                   <WhatsAppFab />
                 </div>

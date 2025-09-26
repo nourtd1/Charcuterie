@@ -41,6 +41,7 @@ export function ProductCard({ product, onProductClick }: { product: Product, onP
             src={product.image}
             alt={product.name}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             data-ai-hint={product.dataAiHint}
           />
@@ -97,7 +98,7 @@ export function ProductDetailsDialog({ product, open, onOpenChange }: { product:
             <DialogContent className="sm:max-w-[600px] bg-background">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="relative aspect-square">
-                        <Image src={product.image} alt={product.name} fill className="object-cover rounded-md" data-ai-hint={product.dataAiHint} />
+                        <Image src={product.image} alt={product.name} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover rounded-md" data-ai-hint={product.dataAiHint} />
                     </div>
                     <div className="flex flex-col">
                         <DialogHeader>
