@@ -120,22 +120,65 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 -z-10 hero-overlay" />
                   <div className="relative z-10 max-w-6xl w-[95%] sm:w-[92%] px-3 sm:px-4 flex flex-col items-center justify-center min-h-full py-8 sm:py-12">
-                    <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-headline text-white mb-3 sm:mb-4 leading-tight">
+                    {/* Titre principal avec animation d'entrée */}
+                    <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-headline text-white mb-3 sm:mb-4 leading-tight animate-slide-in-left">
                       {slide.title}
                     </h1>
-                    <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3">
+                    
+                    {/* Sous-titre avec animation d'entrée */}
+                    <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3 animate-slide-in-right">
                       {slide.subtitle}
                     </div>
-                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-2">
+                    
+                    {/* Description avec animation fade-in */}
+                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-2 animate-fade-in-up">
                       Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte.
                     </p>
-                    <SearchBar className="mb-6 sm:mb-8 max-w-2xl mx-auto w-full" />
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 w-full max-w-md sm:max-w-none" role="group" aria-label="Actions principales">
-                      <Button size="lg" className="hero-cta-primary" asChild>
-                        <Link href="/products" aria-label="Accéder au catalogue complet des produits">Voir le catalogue</Link>
-                      </Button>
-                      <Button size="lg" variant="outline" className="hero-cta-secondary" asChild>
-                        <Link href="/products?filter=promotions" aria-label="Voir les promotions et offres spéciales">Promotions</Link>
+                    
+                    {/* Phrase d'accroche animée avec rotation des messages */}
+                    <div className="mb-8 sm:mb-10 text-center">
+                      <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white/95 mb-4">
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="inline-block animate-bounce text-2xl">✨</span>
+                          <span className="animate-pulse">Fraîcheur garantie</span>
+                          <span className="inline-block animate-bounce text-2xl delay-100">✨</span>
+                        </div>
+                      </div>
+                      <div className="text-base sm:text-lg md:text-xl text-white/80 animate-fade-in-up">
+                        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+                          <span className="inline-flex items-center gap-1">
+                            <Truck className="w-4 h-4" />
+                            Livraison rapide à Goma
+                          </span>
+                          <span className="hidden sm:inline text-white/40">•</span>
+                          <span className="inline-flex items-center gap-1">
+                            <Leaf className="w-4 h-4" />
+                            Produits artisanaux
+                          </span>
+                          <span className="hidden sm:inline text-white/40">•</span>
+                          <span className="inline-flex items-center gap-1">
+                            <Award className="w-4 h-4" />
+                            Qualité premium
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bouton CTA principal moderne avec animations avancées */}
+                    <div className="mb-6 sm:mb-8">
+                      <Button 
+                        size="lg" 
+                        className="hero-cta-modern group relative overflow-hidden bg-gradient-to-r from-primary via-orange-500 to-accent hover:from-primary/90 hover:via-orange-400 hover:to-accent/90 text-white font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-5 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-500 hover:animate-pulse border-2 border-white/20 hover:border-white/40" 
+                        asChild
+                      >
+                        <Link href="/products" aria-label="Commander maintenant nos produits">
+                          <span className="relative z-10 flex items-center gap-3">
+                            <span className="group-hover:animate-bounce">🛒</span>
+                            Commander maintenant
+                            <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                          </span>
+                          <div className="absolute inset-0 bg-gradient-to-r from-accent via-orange-400 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </Link>
                       </Button>
                     </div>
                     <nav className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm md:text-base" role="navigation" aria-label="Navigation rapide">

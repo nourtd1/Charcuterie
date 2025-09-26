@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Truck, Shield, CreditCard, Beef, GlassWater, Flame, Wine } from "lucide-react";
+import { Truck, Shield, CreditCard, Beef, GlassWater, Flame, Wine, ArrowRight, Leaf, Award } from "lucide-react";
 import { products } from "@/lib/data";
 import SearchBar from "@/components/SearchBar";
 import PartnersSection from "./PartnersSection";
@@ -78,23 +78,60 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
 
         {/* Contenu central */}
         <div className="relative z-20 max-w-5xl w-[92%] px-4 text-white">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black font-headline mb-2 leading-tight">
+          {/* Titre principal avec animation d'entrée */}
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black font-headline mb-2 leading-tight animate-slide-in-left">
             Notre Catalogue
           </h1>
-          <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+          
+          {/* Description avec animation fade-in */}
+          <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8 max-w-3xl mx-auto animate-fade-in-up">
             Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte.
           </p>
 
-          {/* Barre de recherche (redirige vers /products?q=...) */}
-          <SearchBar className="mb-8 max-w-2xl mx-auto" targetPath="/products" />
+          {/* Phrase d'accroche animée avec rotation des messages */}
+          <div className="mb-8 sm:mb-10 text-center">
+            <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white/95 mb-4">
+              <div className="flex items-center justify-center gap-2">
+                <span className="inline-block animate-bounce text-2xl">✨</span>
+                <span className="animate-pulse">Qualité Premium</span>
+                <span className="inline-block animate-bounce text-2xl delay-100">✨</span>
+              </div>
+            </div>
+            <div className="text-base sm:text-lg md:text-xl text-white/80 animate-fade-in-up">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+                <span className="inline-flex items-center gap-1">
+                  <Truck className="w-4 h-4" />
+                  Livraison rapide à Goma
+                </span>
+                <span className="hidden sm:inline text-white/40">•</span>
+                <span className="inline-flex items-center gap-1">
+                  <Leaf className="w-4 h-4" />
+                  Produits artisanaux
+                </span>
+                <span className="hidden sm:inline text-white/40">•</span>
+                <span className="inline-flex items-center gap-1">
+                  <Award className="w-4 h-4" />
+                  Sélection rigoureuse
+                </span>
+              </div>
+            </div>
+          </div>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <Button size="lg" className="hero-cta-primary" asChild>
-              <Link href="/products">Voir le catalogue</Link>
-            </Button>
-            <Button size="lg" variant="outline" className="hero-cta-secondary" asChild>
-              <Link href="/products?filter=promotions">Promotions</Link>
+          {/* Bouton CTA principal moderne avec animations avancées */}
+          <div className="mb-6 sm:mb-8">
+            <Button 
+              size="lg" 
+              className="hero-cta-modern group relative overflow-hidden bg-gradient-to-r from-primary via-orange-500 to-accent hover:from-primary/90 hover:via-orange-400 hover:to-accent/90 text-white font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-5 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-500 hover:animate-pulse border-2 border-white/20 hover:border-white/40" 
+              asChild
+            >
+              <Link href="#catalogue" aria-label="Découvrir nos produits">
+                <span className="relative z-10 flex items-center gap-3">
+                  <span className="group-hover:animate-bounce">🛍️</span>
+                  Découvrir nos produits
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-accent via-orange-400 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </Link>
             </Button>
           </div>
 
@@ -187,7 +224,7 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
       
 
       {/* Catalogue */}
-      <div className="container mx-auto py-16 md:py-24">
+      <div id="catalogue" className="container mx-auto py-16 md:py-24">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Nos Produits</h2>
           <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
