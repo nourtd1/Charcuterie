@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Charcuterie & produits du terroir — Fraîcheur livrée chez vous",
   description: "Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte. Charcuterie, vins et produits naturels de qualité.",
   keywords: ["charcuterie", "produits du terroir", "Goma", "livraison", "épicerie fine", "vins", "boissons naturelles"],
-  authors: [{ name: "Julie's Gourmet Goma" }],
+  authors: [{ name: "Alimentation Certains" }],
   manifest: "/manifest.webmanifest",
   themeColor: "#0D1B2A",
   icons: {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description: "Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte.",
     type: "website",
     locale: "fr_FR",
-    siteName: "Julie's Gourmet Goma",
+    siteName: "Alimentation Certains",
     images: [
       {
         url: "/assets/images/banners/accueil_banner.jpg",

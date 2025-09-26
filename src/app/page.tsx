@@ -39,7 +39,7 @@ const testimonials = [
   },
   {
     name: "Paul B.",
-    quote: "Service de livraison rapide et produits toujours frais. Julie's Gourmet est devenue mon épicerie de référence à Goma.",
+    quote: "Service de livraison rapide et produits toujours frais. Alimentation Certains est devenue mon épicerie de référence à Goma.",
     stars: 5,
   }
 ];
@@ -66,7 +66,7 @@ export default function Home() {
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: "Julie's Gourmet Goma",
+    name: "Alimentation Certains",
     url: siteUrl,
     logo: `${siteUrl}/assets/images/logo/logo.png`,
     sameAs: ['https://wa.me/243972499388']
@@ -75,7 +75,7 @@ export default function Home() {
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: "Julie's Gourmet Goma",
+    name: "Alimentation Certains",
     url: siteUrl,
     potentialAction: {
       '@type': 'SearchAction',
@@ -483,7 +483,7 @@ export default function Home() {
             <div className="relative w-full h-80 md:h-96 rounded-2xl overflow-hidden ring-1 ring-border/40 shadow-lg">
                  <Image
                     src="/assets/images/team/gerant.jpg"
-                    alt="Julie's Gourmet Goma Storefront"
+                    alt="Alimentation Certains Storefront"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover object-[50%_22%] md:object-[50%_18%]"
@@ -494,7 +494,7 @@ export default function Home() {
               <Utensils className="h-12 w-12 text-accent mb-4 drop-shadow-sm" />
               <h2 className="text-3xl md:text-4xl font-bold font-headline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4">Notre Histoire</h2>
               <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-                Julie's Gourmet Goma est née d'une passion pour les saveurs authentiques et les produits de qualité. Fondée au cœur de Goma, notre épicerie fine a pour mission de vous offrir le meilleur de la charcuterie, des vins sélectionnés et des produits naturels locaux.
+                Alimentation Certains est née d'une passion pour les saveurs authentiques et les produits de qualité. Fondée au cœur de Goma, notre épicerie fine a pour mission de vous offrir le meilleur de la charcuterie, des vins sélectionnés et des produits naturels locaux.
               </p>
               <Button asChild variant="link" className="p-0 h-auto text-lg text-primary hover:text-accent transition-colors">
                 <Link href="/about">En savoir plus <ArrowRight className="ml-2" /></Link>

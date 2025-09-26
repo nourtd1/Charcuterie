@@ -15,7 +15,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2">
               <Utensils className="h-7 w-7 text-primary" />
               <span className="text-lg md:text-xl font-bold font-headline">
-                charcuterie & alimentation certains
+                Alimentation Certains
               </span>
             </Link>
             <p className="text-sm text-white/80 leading-relaxed">
@@ -107,7 +107,7 @@ export default function Footer() {
       {/* Bandeau inférieur */}
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-xs sm:text-sm text-white/70 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-center sm:text-left">© {new Date().getFullYear()} charcuterie & alimentation certains. Tous droits réservés.</p>
+          <p className="text-center sm:text-left">© {new Date().getFullYear()} Alimentation Certains. Tous droits réservés.</p>
           <div className="flex items-center gap-4">
             <Link href="#" className="hover:text-primary">Mentions légales</Link>
             <span className="hidden sm:block h-4 w-px bg-white/15" />

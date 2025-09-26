@@ -125,7 +125,7 @@ export default function Header() {
           <Utensils className="h-7 w-7 text-primary" />
           <div className="flex flex-col leading-tight">
           <span className="font-bold sm:inline-block font-headline text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            charcuterie & alimentation
+            Alimentation Certains
           </span>
             <span className="hidden sm:block text-[11px] text-muted-foreground">Qualité & service</span>
           </div>
@@ -223,7 +223,7 @@ export default function Header() {
                 <Link href="/" className="mr-6 flex items-center space-x-2 mb-6" onClick={() => setIsMobileMenuOpen(false)}>
                             <Utensils className="h-7 w-7 text-primary" />
                             <span className="font-bold font-headline text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                                charcuterie & alimentation
+                                Alimentation Certains
                             </span>
                         </Link>
                         <nav className="flex flex-col gap-6 text-lg" aria-label="Navigation mobile">
