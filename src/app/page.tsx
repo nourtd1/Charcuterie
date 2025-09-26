@@ -106,7 +106,7 @@ export default function Home() {
               hint: 'seasonal products banner'
             }].map((slide, idx) => (
               <CarouselItem key={idx}>
-                <header className="relative h-[70vh] md:h-[65vh] w-full flex items-center justify-center text-center">
+                <header className="relative h-[75vh] sm:h-[70vh] md:h-[65vh] w-full flex items-center justify-center text-center" role="banner" aria-label="Section d'accueil principale">
                   <Image
                     src={slide.image}
                     alt={slide.title}
@@ -115,34 +115,36 @@ export default function Home() {
                     className="object-cover -z-20"
                     priority={idx === 0}
                     data-ai-hint={slide.hint}
+                    quality={85}
+                    loading={idx === 0 ? "eager" : "lazy"}
                   />
                   <div className="absolute inset-0 -z-10 hero-overlay" />
-                  <div className="relative z-10 max-w-5xl w-[92%] px-4">
-                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-black font-headline text-white mb-4 leading-tight">
+                  <div className="relative z-10 max-w-6xl w-[95%] sm:w-[92%] px-3 sm:px-4 flex flex-col items-center justify-center min-h-full py-8 sm:py-12">
+                    <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-headline text-white mb-3 sm:mb-4 leading-tight">
                       {slide.title}
                     </h1>
-                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">
+                    <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3">
                       {slide.subtitle}
                     </div>
-                    <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-2">
                       Produits artisanaux, sélection quotidienne. Livraison locale rapide à Goma – Trois Payotte.
                     </p>
-                    <SearchBar className="mb-8 max-w-2xl mx-auto" />
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                    <SearchBar className="mb-6 sm:mb-8 max-w-2xl mx-auto w-full" />
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 w-full max-w-md sm:max-w-none" role="group" aria-label="Actions principales">
                       <Button size="lg" className="hero-cta-primary" asChild>
-                        <Link href="/products">Voir le catalogue</Link>
+                        <Link href="/products" aria-label="Accéder au catalogue complet des produits">Voir le catalogue</Link>
                       </Button>
                       <Button size="lg" variant="outline" className="hero-cta-secondary" asChild>
-                        <Link href="/products?filter=promotions">Promotions</Link>
+                        <Link href="/products?filter=promotions" aria-label="Voir les promotions et offres spéciales">Promotions</Link>
                       </Button>
                     </div>
-                    <div className="flex flex-wrap items-center justify-center gap-4 text-sm md:text-base">
-                      <a href="#viande" className="hero-quick-link">Viande</a>
-                      <span className="text-white/60">•</span>
-                      <a href="#boisson" className="hero-quick-link">Boisson</a>
-                      <span className="text-white/60">•</span>
-                      <a href="#offre-du-jour" className="hero-quick-link">Offre du jour</a>
-                    </div>
+                    <nav className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm md:text-base" role="navigation" aria-label="Navigation rapide">
+                      <a href="#viande" className="hero-quick-link" aria-label="Aller à la section viandes">Viande</a>
+                      <span className="text-white/60" aria-hidden="true">•</span>
+                      <a href="#boisson" className="hero-quick-link" aria-label="Aller à la section boissons">Boisson</a>
+                      <span className="text-white/60" aria-hidden="true">•</span>
+                      <a href="#offre-du-jour" className="hero-quick-link" aria-label="Aller à la section offres du jour">Offre du jour</a>
+                    </nav>
                   </div>
                 </header>
               </CarouselItem>

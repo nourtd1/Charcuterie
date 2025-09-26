@@ -35,13 +35,13 @@ export default function SearchBar({
           placeholder={placeholder}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="h-12 md:h-14 text-base md:text-lg bg-white/95 backdrop-blur-sm border-white/20 text-slate-900 placeholder:text-slate-600 focus:bg-white focus:ring-2 focus:ring-primary/50 shadow-lg search-input"
+          className="h-12 md:h-14 text-base md:text-lg bg-white/95 backdrop-blur-sm border-white/20 text-slate-800 placeholder:text-slate-500 focus:bg-white focus:ring-2 focus:ring-primary/50 shadow-lg search-input rounded-2xl transition-all duration-300 ease-out"
           aria-label="Rechercher des produits"
         />
         <Button
           type="submit"
           size="sm"
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-lg"
           aria-label="Lancer la recherche"
         >
           <Search className="h-4 w-4" />

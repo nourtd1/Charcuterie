@@ -83,19 +83,35 @@
 @layer components {
   /* Styles pour les micro-interactions du Hero */
   .hero-cta-primary {
-    @apply bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-base font-semibold shadow-lg transition-all duration-200 hover:shadow-xl;
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold shadow-lg transition-all duration-300 hover:shadow-xl rounded-xl;
+    min-width: fit-content;
+    width: 100%;
+    max-width: 200px;
   }
   
   .hero-cta-primary:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
+    box-shadow: 0 20px 25px -5px rgba(247, 127, 0, 0.3), 0 10px 10px -5px rgba(247, 127, 0, 0.1);
+  }
+  
+  .hero-cta-primary:active {
+    transform: scale(0.98);
   }
   
   .hero-cta-secondary {
-    @apply border-2 border-white text-white hover:bg-white hover:text-foreground px-8 py-3 text-base font-semibold backdrop-blur-sm transition-all duration-200 hover:shadow-xl;
+    @apply border-2 border-white text-white hover:bg-white hover:text-foreground px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold backdrop-blur-sm transition-all duration-300 hover:shadow-xl rounded-xl;
+    min-width: fit-content;
+    width: 100%;
+    max-width: 200px;
   }
   
   .hero-cta-secondary:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
+    box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.3), 0 10px 10px -5px rgba(255, 255, 255, 0.1);
+  }
+  
+  .hero-cta-secondary:active {
+    transform: scale(0.98);
   }
   
   .hero-quick-link {
@@ -135,12 +151,78 @@
   /* Animation pour la barre de recherche */
   .search-input:focus {
     transform: scale(1.02);
-    box-shadow: 0 0 0 3px rgba(247, 127, 0, 0.25); /* #F77F00 */
+    box-shadow: 0 0 0 3px rgba(247, 127, 0, 0.25), 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .search-input {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 
   /* Reveal: état visible appliqué par IntersectionObserver */
   .reveal-in {
     opacity: 1 !important;
     transform: translateY(0) !important;
+  }
+  
+  /* Améliorations responsive pour mobile */
+  @media (max-width: 640px) {
+    .hero-cta-primary,
+    .hero-cta-secondary {
+      width: 100%;
+      max-width: 280px;
+      font-size: 0.875rem;
+      padding: 0.75rem 1.5rem;
+    }
+    
+    .search-input {
+      height: 3rem;
+      font-size: 1rem;
+    }
+    
+    .search-input:focus {
+      transform: scale(1.01);
+    }
+  }
+  
+  /* Optimisation pour très petits écrans */
+  @media (max-width: 375px) {
+    .hero-cta-primary,
+    .hero-cta-secondary {
+      font-size: 0.8rem;
+      padding: 0.625rem 1.25rem;
+    }
+  }
+  
+  /* Amélioration de l'accessibilité */
+  @media (prefers-reduced-motion: reduce) {
+    .search-input,
+    .hero-cta-primary,
+    .hero-cta-secondary,
+    .hero-quick-link {
+      transition: none;
+    }
+    
+    .search-input:focus,
+    .hero-cta-primary:hover,
+    .hero-cta-secondary:hover {
+      transform: none;
+    }
+  }
+  
+  /* Amélioration du contraste pour l'accessibilité */
+  .search-input::placeholder {
+    color: rgb(107 114 128); /* text-slate-500 - meilleur contraste */
+  }
+  
+  .search-input:focus::placeholder {
+    color: rgb(75 85 99); /* text-slate-600 - encore meilleur contraste au focus */
+  }
+  
+  /* Focus visible pour l'accessibilité */
+  .hero-cta-primary:focus-visible,
+  .hero-cta-secondary:focus-visible,
+  .hero-quick-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
   }
 }
