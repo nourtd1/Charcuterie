@@ -32,8 +32,8 @@ function computeTitle(slug: string) {
   }
 }
 
-export default async function CategoryPage({ params, searchParams }: { params: { slug: string }, searchParams?: Promise<{ [k: string]: string | string[] | undefined }> }) {
-  const { slug } = params;
+export default async function CategoryPage({ params, searchParams }: { params: Promise<{ slug: string }>, searchParams?: Promise<{ [k: string]: string | string[] | undefined }> }) {
+  const { slug } = await params;
   const resolved = (await searchParams) || {};
   const qParam = typeof resolved.q === 'string' ? resolved.q : undefined;
   const category: ProductCategory | undefined = slugToCategory[slug];

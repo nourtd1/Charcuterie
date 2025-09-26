@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   keywords: ["charcuterie", "produits du terroir", "Goma", "livraison", "épicerie fine", "vins", "boissons naturelles"],
   authors: [{ name: "Alimentation Certains" }],
   manifest: "/manifest.webmanifest",
-  themeColor: "#0D1B2A",
   icons: {
     icon: "/favicon.ico",
     apple: "/assets/images/logo/logo.png",
@@ -56,6 +55,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#0D1B2A",
   maximumScale: 5,
   userScalable: true,
   viewportFit: "cover",
@@ -74,7 +74,6 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700;900&display=swap" rel="stylesheet" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="theme-color" content="#0D1B2A" />
         <link rel="apple-touch-icon" href="/assets/images/logo/logo.png" />
       </head>
       <body className="font-body antialiased bg-background">
