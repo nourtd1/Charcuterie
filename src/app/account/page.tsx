@@ -16,7 +16,7 @@ import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmail
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingBag, User as UserIcon, Lock } from "lucide-react";
+import { ShoppingBag, User as UserIcon, Lock, Mail, Calendar, Shield, Settings, Bell, CreditCard, MapPin, Phone, Edit3, CheckCircle, Clock, Package, Star, Award, Truck, Heart, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 
 const registerSchema = z.object({
@@ -122,76 +122,307 @@ export default function AccountPage() {
 
     if (user) {
         return (
-            <div className="container mx-auto py-16 md:py-24">
-                 <div className="mb-12">
-                    <h1 className="text-4xl font-bold font-headline">Mon Compte</h1>
-                    <p className="text-muted-foreground">Bienvenue, {user.displayName || user.email} !</p>
+            <div className="bg-background min-h-screen">
+                {/* Hero Section */}
+                <section className="relative -mt-16 h-[50vh] w-full flex items-center justify-center text-center overflow-hidden">
+                    <Image
+                        src="/assets/images/banners/accueil_banner.jpg"
+                        alt="Mon Compte"
+                        fill
+                        sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px"
+                        className="object-cover -z-20"
+                        priority
+                    />
+                    <div className="absolute inset-0 -z-10 hero-overlay" />
+                    <div className="relative z-10 max-w-4xl w-[95%] px-4 text-white">
+                        <div className="flex items-center justify-center mb-6">
+                            <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border-4 border-white/30">
+                                <UserIcon className="w-10 h-10 text-white" />
+                            </div>
+                        </div>
+                        <h1 className="text-3xl md:text-5xl lg:text-6xl font-black font-headline mb-4 leading-tight animate-slide-in-left">
+                            Mon Compte
+                        </h1>
+                        <p className="text-lg md:text-xl text-white/90 mb-6 animate-fade-in-up">
+                            Bienvenue, <span className="font-bold text-white">{user.displayName || user.email}</span> !
+                        </p>
+                        <div className="flex flex-wrap items-center justify-center gap-4 text-sm md:text-base animate-fade-in-up">
+                            <span className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full">
+                                <CheckCircle className="w-4 h-4" />
+                                Compte vérifié
+                            </span>
+                            <span className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full">
+                                <Calendar className="w-4 h-4" />
+                                Membre depuis {new Date(user.metadata.creationTime).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+                            </span>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Main Content */}
+                <div className="container mx-auto py-16 md:py-24 px-4">
+                    <Tabs defaultValue="profile" className="w-full">
+                        {/* Navigation Tabs */}
+                        <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-4xl mx-auto mb-8 bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                            <TabsTrigger value="profile" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground">
+                                <UserIcon className="mr-2 w-4 h-4" />
+                                Profil
+                            </TabsTrigger>
+                            <TabsTrigger value="orders" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground">
+                                <ShoppingBag className="mr-2 w-4 h-4" />
+                                Commandes
+                            </TabsTrigger>
+                            <TabsTrigger value="security" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground">
+                                <Shield className="mr-2 w-4 h-4" />
+                                Sécurité
+                            </TabsTrigger>
+                        </TabsList>
+
+                        {/* Profile Tab */}
+                        <TabsContent value="profile" className="space-y-8">
+                            {/* Profile Overview */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                    <CardHeader className="text-center">
+                                        <div className="w-20 h-20 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <UserIcon className="w-10 h-10 text-white" />
+                                        </div>
+                                        <CardTitle className="text-xl">Informations personnelles</CardTitle>
+                                        <CardDescription>Vos données de profil</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4">
+                                        <div className="space-y-2">
+                                            <Label className="text-sm font-medium text-muted-foreground">Nom complet</Label>
+                                            <div className="flex items-center gap-2 p-3 bg-background/60 rounded-lg border">
+                                                <UserIcon className="w-4 h-4 text-muted-foreground" />
+                                                <span className="font-medium">{user.displayName || 'Non défini'}</span>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="text-sm font-medium text-muted-foreground">Adresse email</Label>
+                                            <div className="flex items-center gap-2 p-3 bg-background/60 rounded-lg border">
+                                                <Mail className="w-4 h-4 text-muted-foreground" />
+                                                <span className="font-medium">{user.email}</span>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                    <CardHeader className="text-center">
+                                        <div className="w-20 h-20 bg-gradient-to-r from-accent to-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <ShoppingBag className="w-10 h-10 text-white" />
+                                        </div>
+                                        <CardTitle className="text-xl">Statistiques</CardTitle>
+                                        <CardDescription>Votre activité</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4">
+                                        <div className="text-center">
+                                            <div className="text-3xl font-bold text-primary">0</div>
+                                            <div className="text-sm text-muted-foreground">Commandes</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-3xl font-bold text-accent">$0</div>
+                                            <div className="text-sm text-muted-foreground">Total dépensé</div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                    <CardHeader className="text-center">
+                                        <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <Award className="w-10 h-10 text-white" />
+                                        </div>
+                                        <CardTitle className="text-xl">Statut</CardTitle>
+                                        <CardDescription>Votre niveau</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4">
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-green-600">Nouveau</div>
+                                            <div className="text-sm text-muted-foreground">Membre</div>
+                                        </div>
+                                        <div className="w-full bg-muted rounded-full h-2">
+                                            <div className="bg-gradient-to-r from-primary to-accent h-2 rounded-full" style={{ width: '25%' }}></div>
+                                        </div>
+                                        <div className="text-xs text-center text-muted-foreground">25% vers le niveau suivant</div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+
+                            {/* Quick Actions */}
+                            <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <Settings className="w-5 h-5" />
+                                        Actions rapides
+                                    </CardTitle>
+                                    <CardDescription>Gérez votre compte facilement</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                        <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
+                                            <Edit3 className="w-6 h-6" />
+                                            <span className="text-sm">Modifier le profil</span>
+                                        </Button>
+                                        <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
+                                            <Bell className="w-6 h-6" />
+                                            <span className="text-sm">Notifications</span>
+                                        </Button>
+                                        <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
+                                            <Heart className="w-6 h-6" />
+                                            <span className="text-sm">Favoris</span>
+                                        </Button>
+                                        <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
+                                            <CreditCard className="w-6 h-6" />
+                                            <span className="text-sm">Moyens de paiement</span>
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+
+                        {/* Orders Tab */}
+                        <TabsContent value="orders" className="space-y-8">
+                            <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <ShoppingBag className="w-5 h-5" />
+                                        Historique des commandes
+                                    </CardTitle>
+                                    <CardDescription>Consultez vos achats passés et suivez vos commandes</CardDescription>
+                                </CardHeader>
+                                <CardContent className="pt-6">
+                                    <div className="text-center py-16">
+                                        <div className="w-24 h-24 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                            <ShoppingBag className="w-12 h-12 text-primary" />
+                                        </div>
+                                        <h3 className="text-xl font-semibold mb-2">Aucune commande pour le moment</h3>
+                                        <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                                            Découvrez nos produits et passez votre première commande pour voir l'historique ici.
+                                        </p>
+                                        <Button asChild className="bg-gradient-to-r from-primary to-accent text-primary-foreground">
+                                            <Link href="/products">
+                                                Découvrir nos produits
+                                                <Package className="ml-2 w-4 h-4" />
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            {/* Order Status Cards */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                    <CardContent className="p-6 text-center">
+                                        <Clock className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+                                        <h3 className="font-semibold mb-1">En attente</h3>
+                                        <p className="text-sm text-muted-foreground">0 commandes</p>
+                                    </CardContent>
+                                </Card>
+                                <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                    <CardContent className="p-6 text-center">
+                                        <Truck className="w-8 h-8 text-primary mx-auto mb-3" />
+                                        <h3 className="font-semibold mb-1">En cours</h3>
+                                        <p className="text-sm text-muted-foreground">0 commandes</p>
+                                    </CardContent>
+                                </Card>
+                                <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                    <CardContent className="p-6 text-center">
+                                        <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
+                                        <h3 className="font-semibold mb-1">Livrées</h3>
+                                        <p className="text-sm text-muted-foreground">0 commandes</p>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </TabsContent>
+
+                        {/* Security Tab */}
+                        <TabsContent value="security" className="space-y-8">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {/* Password Management */}
+                                <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                    <CardHeader>
+                                        <CardTitle className="flex items-center gap-2">
+                                            <Lock className="w-5 h-5" />
+                                            Mot de passe
+                                        </CardTitle>
+                                        <CardDescription>Gérez la sécurité de votre compte</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6">
+                                        <div className="space-y-4">
+                                            <div className="flex items-center gap-3 p-4 bg-background/60 rounded-lg border">
+                                                <Shield className="w-5 h-5 text-green-600" />
+                                                <div>
+                                                    <h4 className="font-medium">Mot de passe actuel</h4>
+                                                    <p className="text-sm text-muted-foreground">Sécurisé et à jour</p>
+                                                </div>
+                                            </div>
+                                            <Button onClick={handlePasswordReset} variant="outline" className="w-full">
+                                                <Edit3 className="mr-2 w-4 h-4" />
+                                                Changer le mot de passe
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Account Actions */}
+                                <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                    <CardHeader>
+                                        <CardTitle className="flex items-center gap-2">
+                                            <Settings className="w-5 h-5" />
+                                            Actions du compte
+                                        </CardTitle>
+                                        <CardDescription>Gérez votre session et vos préférences</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6">
+                                        <div className="space-y-4">
+                                            <div className="flex items-center gap-3 p-4 bg-background/60 rounded-lg border">
+                                                <UserIcon className="w-5 h-5 text-blue-600" />
+                                                <div>
+                                                    <h4 className="font-medium">Session active</h4>
+                                                    <p className="text-sm text-muted-foreground">Connecté depuis {new Date().toLocaleDateString('fr-FR')}</p>
+                                                </div>
+                                            </div>
+                                            <Button onClick={handleLogout} variant="destructive" className="w-full">
+                                                <Lock className="mr-2 w-4 h-4" />
+                                                Se déconnecter
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+
+                            {/* Security Tips */}
+                            <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <Shield className="w-5 h-5" />
+                                        Conseils de sécurité
+                                    </CardTitle>
+                                    <CardDescription>Protégez votre compte avec ces bonnes pratiques</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="flex items-start gap-3 p-4 bg-background/60 rounded-lg">
+                                            <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                                            <div>
+                                                <h4 className="font-medium">Mot de passe fort</h4>
+                                                <p className="text-sm text-muted-foreground">Utilisez au moins 8 caractères avec des chiffres et symboles</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start gap-3 p-4 bg-background/60 rounded-lg">
+                                            <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                                            <div>
+                                                <h4 className="font-medium">Email vérifié</h4>
+                                                <p className="text-sm text-muted-foreground">Votre adresse email est vérifiée et sécurisée</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                    </Tabs>
                 </div>
-                <Tabs defaultValue="profile" className="w-full">
-                    <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-2xl">
-                        <TabsTrigger value="profile"><UserIcon className="mr-2"/>Profil</TabsTrigger>
-                        <TabsTrigger value="orders"><ShoppingBag className="mr-2"/>Commandes</TabsTrigger>
-                        <TabsTrigger value="security"><Lock className="mr-2"/>Sécurité</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="profile">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Informations personnelles</CardTitle>
-                                <CardDescription>Gérez vos informations de contact.</CardDescription>
-                            </CardHeader>
-                            <CardContent className="space-y-4 pt-6">
-                                <div className="space-y-2">
-                                    <Label>Nom complet</Label>
-                                    <Input value={user.displayName || 'Non défini'} disabled />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Adresse email</Label>
-                                    <Input value={user.email || ''} disabled />
-                                </div>
-                            </CardContent>
-                             <CardFooter className="border-t px-6 py-4 mt-6">
-                               <p className="text-xs text-muted-foreground">Pour modifier ces informations, veuillez contacter le support.</p>
-                            </CardFooter>
-                        </Card>
-                    </TabsContent>
-                    <TabsContent value="orders">
-                         <Card>
-                            <CardHeader>
-                                <CardTitle>Historique des commandes</CardTitle>
-                                <CardDescription>Consultez vos achats passés.</CardDescription>
-                            </CardHeader>
-                            <CardContent className="pt-6">
-                                <div className="text-center py-12 text-muted-foreground">
-                                    <ShoppingBag className="mx-auto h-12 w-12" />
-                                    <p className="mt-4">Vous n'avez effectué aucune commande pour le moment.</p>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-                     <TabsContent value="security">
-                         <Card>
-                            <CardHeader>
-                                <CardTitle>Sécurité</CardTitle>
-                                <CardDescription>Gérez les paramètres de sécurité de votre compte.</CardDescription>
-                            </CardHeader>
-                            <CardContent className="space-y-6 pt-6">
-                                <div>
-                                    <h3 className="font-medium">Changer le mot de passe</h3>
-                                    <p className="text-sm text-muted-foreground mt-1">Un email sera envoyé à votre adresse pour procéder au changement.</p>
-                                    <Button onClick={handlePasswordReset} variant="outline" className="mt-4">
-                                        Recevoir un lien de réinitialisation
-                                    </Button>
-                                </div>
-                                <Separator />
-                                <div>
-                                     <h3 className="font-medium">Se déconnecter</h3>
-                                     <p className="text-sm text-muted-foreground mt-1">Met fin à votre session actuelle sur cet appareil.</p>
-                                    <Button onClick={handleLogout} variant="destructive" className="mt-4">Se déconnecter</Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-                </Tabs>
             </div>
         )
     }
