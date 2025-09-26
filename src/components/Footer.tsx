@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Utensils, MapPin, Phone, Mail, Instagram, Facebook, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { STORE_MAP_URL } from "@/lib/config";
 
 export default function Footer() {
   return (
@@ -56,10 +57,10 @@ export default function Footer() {
             <div className="mt-4">
               <Button asChild className="inline-flex items-center gap-2">
                 <Link
-                  href={`https://www.openstreetmap.org/?mlat=${-1.68}&mlon=${29.23}#map=16/${-1.68}/${29.23}`}
+                  href={STORE_MAP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Voir la localisation sur OpenStreetMap"
+                  aria-label="Voir la localisation sur Google Maps"
                 >
                   <MapPin className="h-4 w-4" /> Voir sur la carte
                 </Link>

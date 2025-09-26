@@ -3,11 +3,11 @@ import Image from "next/image";
 type Partner = { name: string; logo: string; url?: string };
 
 const partners: Partner[] = [
-  { name: "Virunga Origins", logo: "/assets/images/logo/logo.png", url: "https://virungaorigins.com" },
-  { name: "Africa Global Logistics (AGL)", logo: "/assets/images/logo/logo.png", url: "https://www.agl.com" },
+  { name: "Virunga Origins", logo: "/assets/images/logo/logo.png", url: "https://origins.virunga.org" },
+  { name: "Africa Global Logistics (AGL)", logo: "/assets/images/logo/logo.png", url: "https://www.aglgroup.com" },
   { name: "DHL Express RDC", logo: "/assets/images/logo/logo.png", url: "https://www.dhl.com/cd-en/home.html" },
-  { name: "Hôtel Ihusi Goma", logo: "/assets/images/logo/logo.png", url: undefined },
-  { name: "Lac Kivu Lodge", logo: "/assets/images/logo/logo.png", url: undefined },
+  { name: "Hôtel Ihusi Goma", logo: "/assets/images/logo/logo.png", url: "https://www.google.com/maps/search/H%C3%B4tel+Ihusi+Goma" },
+  { name: "Lac Kivu Lodge", logo: "/assets/images/logo/logo.png", url: "https://www.google.com/maps/search/Lac+Kivu+Lodge+Goma" },
 ];
 
 export default function PartnersSection() {

@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
-import Map from "@/components/Map";
+import { STORE_MAP_URL } from "@/lib/config";
 import Link from "next/link";
 import NextImage from "next/image";
 
 export default function ContactPage() {
+  const googleEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent('-1.680,29.230')}&z=15&hl=fr&output=embed`;
   return (
     <div className="bg-background">
       {/* Hero */}
@@ -111,28 +112,29 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent className="pt-0">
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
-                <Map
-                  latitude={-1.680}
-                  longitude={29.230}
-                  zoom={15}
+                <iframe
+                  src={googleEmbedSrc}
                   className="w-full h-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  aria-label="Carte Google Maps - Localisation de la boutique"
                   title="Localisation Goma – Trois Payotte"
                 />
                 {/* Overlay actions */}
                 <div className="pointer-events-none absolute top-3 right-3 flex gap-2">
                   <Button asChild size="sm" variant="secondary" className="pointer-events-auto bg-background/80 backdrop-blur-md border border-border/60">
-                    <Link href={`https://www.openstreetmap.org/?mlat=${-1.68}&mlon=${29.23}#map=16/${-1.68}/${29.23}`} target="_blank" rel="noopener noreferrer">Ouvrir sur OSM</Link>
+                    <Link href={STORE_MAP_URL} target="_blank" rel="noopener noreferrer">Ouvrir sur Google Maps</Link>
                   </Button>
                   <Button asChild size="sm" variant="secondary" className="pointer-events-auto bg-background/80 backdrop-blur-md border border-border/60">
-                    <Link href={`https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${-1.68}%2C${29.23}`} target="_blank" rel="noopener noreferrer">Itinéraire</Link>
+                    <Link href={STORE_MAP_URL} target="_blank" rel="noopener noreferrer">Itinéraire</Link>
                   </Button>
                 </div>
               </div>
               <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-                <p className="text-xs text-muted-foreground">Carte OpenStreetMap affichée à titre indicatif.</p>
+                <p className="text-xs text-muted-foreground">Localisation Google Maps.</p>
                 <div className="flex items-center gap-2">
                   <Button asChild size="sm">
-                    <Link href={`https://www.openstreetmap.org/?mlat=${-1.68}&mlon=${29.23}#map=16/${-1.68}/${29.23}`} target="_blank" rel="noopener noreferrer">Voir en plein écran</Link>
+                    <Link href={STORE_MAP_URL} target="_blank" rel="noopener noreferrer">Voir en plein écran</Link>
                   </Button>
                   <Button asChild size="sm" variant="outline">
                     <Link href="/about">À propos</Link>
