@@ -255,7 +255,7 @@ Le catalogue contient **24 produits** répartis en **4 catégories** :
 - Grand Cru Réserve
 
 ### 🧀 Autres produits (4 produits)
-- Gaz, Shikwange, Fromage de chèvre local
+- Gaz, Shikwange, Fromages
 - Miel de forêt, Piment en poudre
 
 ## 🎨 Design System

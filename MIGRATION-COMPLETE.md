@@ -128,7 +128,7 @@ image: '/assets/images/products/viandes/viande_fumee_porc.jpg'
 
 ### **Autres Produits** (6 produits)
 - Gaz (25.00€), Shikwange (7.00€)
-- Fromage de chèvre local (9.50€)
+- Fromages (9.50€)
 - Miel de forêt (11.00€), Piment en poudre (3.20€)
 
 ### **Vins Rouges** (5 produits)

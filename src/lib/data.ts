@@ -232,11 +232,11 @@ export const products: Product[] = [
   },
   {
     id: 20,
-    name: 'Fromage de chèvre local',
+    name: 'Fromages',
     slug: 'fromage-chevre-local',
     category: 'Autres produits',
     price: 9.50,
-    description: 'Fromage de chèvre frais et crémeux, produit localement par des artisans passionnés.',
+    description: 'Fromages frais et crémeux, produits localement par des artisans passionnés.',
     image: '/assets/images/products/autres_produits/fromage_chevre_local.jpg',
     dataAiHint: 'goat cheese',
     inStock: false,
