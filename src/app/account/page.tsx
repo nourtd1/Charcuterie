@@ -160,28 +160,28 @@ export default function AccountPage() {
                 </section>
 
                 {/* Main Content */}
-                <div className="container mx-auto py-16 md:py-24 px-4">
+                <div className="container mx-auto py-8 md:py-16 px-4">
                     <Tabs defaultValue="profile" className="w-full">
                         {/* Navigation Tabs */}
-                        <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-4xl mx-auto mb-8 bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
-                            <TabsTrigger value="profile" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground">
-                                <UserIcon className="mr-2 w-4 h-4" />
-                                Profil
+                        <TabsList className="grid w-full grid-cols-3 max-w-4xl mx-auto mb-6 md:mb-8 bg-card/60 backdrop-blur-md border border-border/40 shadow-lg h-auto">
+                            <TabsTrigger value="profile" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
+                                <UserIcon className="w-4 h-4" />
+                                <span className="hidden sm:inline">Profil</span>
                             </TabsTrigger>
-                            <TabsTrigger value="orders" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground">
-                                <ShoppingBag className="mr-2 w-4 h-4" />
-                                Commandes
+                            <TabsTrigger value="orders" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
+                                <ShoppingBag className="w-4 h-4" />
+                                <span className="hidden sm:inline">Commandes</span>
                             </TabsTrigger>
-                            <TabsTrigger value="security" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground">
-                                <Shield className="mr-2 w-4 h-4" />
-                                Sécurité
+                            <TabsTrigger value="security" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-3 px-2 text-xs sm:text-sm">
+                                <Shield className="w-4 h-4" />
+                                <span className="hidden sm:inline">Sécurité</span>
                             </TabsTrigger>
                         </TabsList>
 
                         {/* Profile Tab */}
-                        <TabsContent value="profile" className="space-y-8">
+                        <TabsContent value="profile" className="space-y-6 md:space-y-8">
                             {/* Profile Overview */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                                 <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
                                     <CardHeader className="text-center">
                                         <div className="w-20 h-20 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-4">
@@ -259,7 +259,7 @@ export default function AccountPage() {
                                     <CardDescription>Gérez votre compte facilement</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
                                         <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
                                             <Edit3 className="w-6 h-6" />
                                             <span className="text-sm">Modifier le profil</span>
@@ -311,7 +311,7 @@ export default function AccountPage() {
                             </Card>
 
                             {/* Order Status Cards */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                                 <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
                                     <CardContent className="p-6 text-center">
                                         <Clock className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
@@ -337,8 +337,8 @@ export default function AccountPage() {
                         </TabsContent>
 
                         {/* Security Tab */}
-                        <TabsContent value="security" className="space-y-8">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <TabsContent value="security" className="space-y-6 md:space-y-8">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                                 {/* Password Management */}
                                 <Card className="bg-card/60 backdrop-blur-md border border-border/40 shadow-lg">
                                     <CardHeader>
@@ -402,7 +402,7 @@ export default function AccountPage() {
                                     <CardDescription>Protégez votre compte avec ces bonnes pratiques</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="flex items-start gap-3 p-4 bg-background/60 rounded-lg">
                                             <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
                                             <div>

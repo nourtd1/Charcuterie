@@ -196,6 +196,11 @@ export default function Header() {
           <Button variant="ghost" size="icon" className="h-10 w-10" aria-label="Favoris" onClick={() => router.push('/products?q=%3Afavorites')}>
             <Heart className="h-5 w-5" />
           </Button>
+          {!loading && user && (
+            <Button variant="ghost" size="icon" className="h-10 w-10" aria-label="Mon compte" onClick={() => router.push('/account')}>
+              <User className="h-5 w-5" />
+            </Button>
+          )}
             <Link href="/cart" aria-label="Panier">
             <Button variant="ghost" size="icon" className="relative h-10 w-10">
                     <ShoppingCart className="h-5 w-5" />
@@ -245,6 +250,36 @@ export default function Header() {
                                 </div>
                               );
                             })}
+                            
+                            {/* Section Compte utilisateur */}
+                            <div className="border-t border-border/40 pt-6">
+                              {!loading && user ? (
+                                <div className="space-y-4">
+                                  <div className="flex items-center gap-3 p-3 bg-background/60 rounded-lg border">
+                                    <User className="h-5 w-5 text-primary" />
+                                    <div>
+                                      <p className="font-medium">{user.displayName || 'Mon Compte'}</p>
+                                      <p className="text-sm text-muted-foreground">{user.email}</p>
+                                    </div>
+                                  </div>
+                                  <div className="flex flex-col gap-2">
+                                    <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2 text-muted-foreground hover:text-foreground hover:bg-background/60 rounded-lg transition-colors">
+                                      <User className="h-4 w-4" />
+                                      Profil & Commandes
+                                    </Link>
+                                    <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="flex items-center gap-2 p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors w-full text-left">
+                                      <LogOut className="h-4 w-4" />
+                                      Déconnexion
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-3 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border border-primary/20 hover:from-primary/20 hover:to-accent/20 transition-colors">
+                                  <User className="h-5 w-5 text-primary" />
+                                  <span className="font-medium">Se connecter</span>
+                                </Link>
+                              )}
+                            </div>
                         </nav>
                 <div className="mt-6">
                   <form onSubmit={(e) => { handleSearch(e); setIsMobileMenuOpen(false); }} className="flex items-center gap-2">
