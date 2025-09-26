@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Truck, Shield, CreditCard, Beef, GlassWater, Flame, Wine } from "lucide-react";
 import { products } from "@/lib/data";
 import SearchBar from "@/components/SearchBar";
+import PartnersSection from "./PartnersSection";
 
 const slugToCategory: Record<string, ProductCategory> = {
   "viande": "Viandes",
@@ -134,6 +135,9 @@ export default async function ProductsPage({ searchParams }: { searchParams?: Pr
           </Card>
         </div>
       </section>
+
+      {/* Partenaires */}
+      <PartnersSection />
 
       
 

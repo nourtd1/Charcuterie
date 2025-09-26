@@ -249,18 +249,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Ruban Partenaires */}
-      <section className="py-8 bg-background">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 items-center opacity-80">
-            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
-            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
-            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
-            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
-            <Image src="/assets/images/logo/logo.png" alt="Partenaire" width={140} height={40} className="mx-auto h-10 w-auto" />
-          </div>
-        </div>
-      </section>
 
       {/* Categories Section */}
       <section id="categories" className="py-16 md:py-24 bg-background">

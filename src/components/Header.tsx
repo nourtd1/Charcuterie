@@ -18,7 +18,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -33,12 +33,16 @@ const navLinks = [
     { href: "/contact", label: "Contact" },
 ];
 
-function NavLink({ href, label, onClick }: { href: string; label: string; onClick?: () => void }) {
+function NavLink({ href, label, onClick, isActive }: { href: string; label: string; onClick?: () => void; isActive?: boolean }) {
     return (
         <Link 
             href={href}
             onClick={onClick}
-            className="relative text-muted-foreground transition-colors duration-300 hover:text-foreground after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-primary after:to-accent after:rounded-full after:transition-[width] after:duration-300 hover:after:w-full"
+            aria-current={isActive ? 'page' : undefined}
+            className={cn(
+              "relative transition-colors duration-300 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-primary after:to-accent after:rounded-full after:transition-[width] after:duration-300 hover:after:w-full",
+              isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+            )}
         >
             {label}
         </Link>
@@ -64,6 +68,7 @@ export default function Header() {
   const { user, loading } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
+  const pathname = usePathname();
 
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -127,8 +132,39 @@ export default function Header() {
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm">
-          {navLinks.map(link => <NavLink key={link.href} {...link} />)}
+        <nav className="hidden lg:flex items-center gap-6 text-sm" aria-label="Navigation principale">
+          {navLinks.map(link => {
+            if (link.label === "Boutique") {
+              return (
+                <DropdownMenu key={link.href}>
+                  <DropdownMenuTrigger asChild>
+                    <button className={cn(
+                      "relative transition-colors duration-300",
+                      pathname?.startsWith('/products') ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                    )}>
+                      Boutique
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem asChild className="cursor-pointer">
+                      <Link href="/products">Catalogue</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="cursor-pointer">
+                      <Link href="/products?filter=promotions">Promotions</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    {categories.slice(1).map(({ label, slug }) => (
+                      <DropdownMenuItem key={slug} asChild className="cursor-pointer">
+                        <Link href={`/categories/${slug}`}>{label}</Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              );
+            }
+            const isActive = pathname === link.href;
+            return <NavLink key={link.href} {...link} isActive={isActive} />
+          })}
         </nav>
 
         {/* Search Bar (desktop) */}
@@ -190,10 +226,25 @@ export default function Header() {
                                 charcuterie & alimentation
                             </span>
                         </Link>
-                        <nav className="flex flex-col gap-6 text-lg">
-                            {navLinks.map(link => (
-                                <NavLink key={link.href} {...link} onClick={() => setIsMobileMenuOpen(false)}/>
-                            ))}
+                        <nav className="flex flex-col gap-6 text-lg" aria-label="Navigation mobile">
+                            {navLinks.map(link => {
+                              const isActive = pathname === link.href;
+                              if (link.label !== 'Boutique') {
+                                return <NavLink key={link.href} {...link} isActive={isActive} onClick={() => setIsMobileMenuOpen(false)}/>;
+                              }
+                              return (
+                                <div key={link.href} className="flex flex-col gap-3">
+                                  <NavLink {...link} isActive={pathname?.startsWith('/products')} onClick={() => setIsMobileMenuOpen(false)} />
+                                  <div className="ml-3 flex flex-col gap-2 text-base">
+                                    <Link href="/products" onClick={() => setIsMobileMenuOpen(false)} className="text-muted-foreground hover:text-foreground">Catalogue</Link>
+                                    <Link href="/products?filter=promotions" onClick={() => setIsMobileMenuOpen(false)} className="text-muted-foreground hover:text-foreground">Promotions</Link>
+                                    {categories.slice(1).map(({ label, slug }) => (
+                                      <Link key={slug} href={`/categories/${slug}`} onClick={() => setIsMobileMenuOpen(false)} className="text-muted-foreground hover:text-foreground">{label}</Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              );
+                            })}
                         </nav>
                 <div className="mt-6">
                   <form onSubmit={(e) => { handleSearch(e); setIsMobileMenuOpen(false); }} className="flex items-center gap-2">
